@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&amp;display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #F4F8FA; font-family: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  ::selection { background: #17D0B0; color: #0E2A37; }
+</style>
+</helmet>
+
+<div style="color:#14384A;overflow-x:hidden;min-height:100vh;">
+
+<!-- ================= NAV ================= -->
+<header style="position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 30px;background:rgba(14,42,55,0.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(23,208,176,0.16);">
+  <a href="Lenneuro.dc.html#home" style="display:flex;align-items:center;gap:0;text-decoration:none;flex:0 0 auto;">
+    <span style="display:inline-flex;background:#fff;padding:7px 10px;border-radius:6px;">
+      <img src="assets/lenneuro-logo.png" alt="Lenneuro" style="height:24px;display:block;">
+    </span>
+  </a>
+  <nav style="display:flex;align-items:center;gap:4px;flex:1 1 auto;justify-content:center;">
+    <a href="About.dc.html" style="color:#C7D6DD;text-decoration:none;font-size:14.5px;font-weight:500;letter-spacing:.1px;padding:8px 11px;border-radius:8px;white-space:nowrap;transition:color .2s,background .2s;" onMouseOver="{{ navHover }}" onMouseOut="{{ navOut }}">About Lenneuro</a>
+    <a href="SnapCath.dc.html" style="color:#C7D6DD;text-decoration:none;font-size:14.5px;font-weight:500;letter-spacing:.1px;padding:8px 11px;border-radius:8px;white-space:nowrap;transition:color .2s,background .2s;" onMouseOver="{{ navHover }}" onMouseOut="{{ navOut }}">SnapCath™</a>
+    <a href="Press.dc.html" style="color:#fff;text-decoration:none;font-size:14.5px;font-weight:700;letter-spacing:.1px;padding:8px 11px;border-radius:8px;white-space:nowrap;background:rgba(23,208,176,0.16);">Media/Press</a>
+    <a href="Team.dc.html" style="color:#C7D6DD;text-decoration:none;font-size:14.5px;font-weight:500;letter-spacing:.1px;padding:8px 11px;border-radius:8px;white-space:nowrap;transition:color .2s,background .2s;" onMouseOver="{{ navHover }}" onMouseOut="{{ navOut }}">Meet the Team</a>
+    <a href="Contact.dc.html" style="color:#C7D6DD;text-decoration:none;font-size:14.5px;font-weight:500;letter-spacing:.1px;padding:8px 11px;border-radius:8px;white-space:nowrap;transition:color .2s,background .2s;" onMouseOver="{{ navHover }}" onMouseOut="{{ navOut }}">Contact</a>
+  </nav>
+  <a href="Contact.dc.html" style="flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;background:#17D0B0;color:#0E2A37;font-weight:700;font-size:14px;letter-spacing:.2px;text-decoration:none;padding:11px 20px;border-radius:8px;transition:transform .2s ease, box-shadow .2s ease;box-shadow:0 6px 18px -8px rgba(23,208,176,.6);" onMouseOver="{{ btnHover }}" onMouseOut="{{ btnOut }}">Join the list</a>
+</header>
+
+<!-- ================= PRESS ================= -->
+<section style="padding:170px 40px 120px;">
+  <div style="max-width:860px;margin:0 auto;">
+    <div style="margin-bottom:56px;">
+      <div style="display:inline-flex;align-items:center;background:#14384A;color:#fff;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;padding:7px 14px;border-radius:5px;margin-bottom:22px;">Media &amp; Press</div>
+      <h1 style="margin:0 0 16px;font-size:clamp(30px,3.6vw,46px);font-weight:800;letter-spacing:-1px;line-height:1.08;color:#14384A;">Announcements &amp; coverage</h1>
+      
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:28px;">
+      <sc-for list="{{ items }}" as="item" hint-placeholder-count="3">
+
+        <!-- Press release: text-only card -->
+        <sc-if value="{{ item.isPR }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#fff;border:1px solid rgba(20,56,74,.1);border-radius:16px;padding:30px 32px;box-shadow:0 20px 44px -32px rgba(14,42,55,.35);">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+              <span style="font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#14384A;background:rgba(20,56,74,.08);border-radius:100px;padding:5px 11px;">Press Release</span>
+              <span style="font-size:13px;color:#8FA7B0;">{{ item.date }}</span>
+            </div>
+            <h3 style="margin:0 0 10px;font-size:21px;font-weight:800;color:#14384A;letter-spacing:-.3px;line-height:1.3;">{{ item.title }}</h3>
+            <p style="margin:0 0 14px;font-size:15px;color:#5A6B73;line-height:1.6;">{{ item.excerpt }}</p>
+            <a href="{{ item.url }}" target="_blank" rel="noopener" style="font-size:14.5px;font-weight:700;color:#0AAEE8;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">Read full release <span>→</span></a>
+          </div>
+        </sc-if>
+
+        <!-- Article: link-preview card -->
+        <sc-if value="{{ item.isArticle }}" hint-placeholder-val="{{ false }}">
+          <a href="{{ item.url }}" target="_blank" rel="noopener" style="display:block;background:#fff;border:1px solid rgba(20,56,74,.1);border-radius:16px;padding:30px 32px;box-shadow:0 20px 44px -32px rgba(14,42,55,.35);text-decoration:none;color:inherit;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+              <span style="font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#0AAEE8;background:rgba(10,174,232,.1);border-radius:100px;padding:5px 11px;">Article</span>
+              <span style="font-size:13px;color:#8FA7B0;">{{ item.date }} · {{ item.source }}</span>
+            </div>
+            <h3 style="margin:0 0 10px;font-size:21px;font-weight:800;color:#14384A;letter-spacing:-.3px;line-height:1.3;">{{ item.title }}</h3>
+            <p style="margin:0 0 14px;font-size:15px;color:#5A6B73;line-height:1.6;">{{ item.excerpt }}</p>
+            <span style="font-size:14.5px;font-weight:700;color:#0AAEE8;display:inline-flex;align-items:center;gap:6px;">Read on {{ item.source }} <span>↗</span></span>
+          </a>
+        </sc-if>
+
+        <!-- YouTube: 16:9 embed -->
+        <sc-if value="{{ item.isYoutube }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#fff;border:1px solid rgba(20,56,74,.1);border-radius:16px;padding:24px 24px 28px;box-shadow:0 20px 44px -32px rgba(14,42,55,.35);">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+              <span style="font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#E0364A;background:rgba(224,54,74,.1);border-radius:100px;padding:5px 11px;">YouTube</span>
+              <span style="font-size:13px;color:#8FA7B0;">{{ item.date }}</span>
+            </div>
+            <div style="position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#0E2A37;margin-bottom:16px;">
+              <iframe src="{{ item.embedUrl }}" title="{{ item.title }}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="" style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>
+            </div>
+            <h3 style="margin:0;font-size:19px;font-weight:800;color:#14384A;letter-spacing:-.3px;line-height:1.3;">{{ item.title }}</h3>
+          </div>
+        </sc-if>
+
+        <!-- Vimeo: 16:9 embed -->
+        <sc-if value="{{ item.isVimeo }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#fff;border:1px solid rgba(20,56,74,.1);border-radius:16px;padding:24px 24px 28px;box-shadow:0 20px 44px -32px rgba(14,42,55,.35);">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+              <span style="font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#17D0B0;background:rgba(23,208,176,.1);border-radius:100px;padding:5px 11px;">Vimeo</span>
+              <span style="font-size:13px;color:#8FA7B0;">{{ item.date }}</span>
+            </div>
+            <div style="position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#0E2A37;margin-bottom:16px;">
+              <iframe src="{{ item.embedUrl }}" title="{{ item.title }}" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen="" style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>
+            </div>
+            <h3 style="margin:0;font-size:19px;font-weight:800;color:#14384A;letter-spacing:-.3px;line-height:1.3;">{{ item.title }}</h3>
+          </div>
+        </sc-if>
+
+      </sc-for>
+
+      <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="text-align:center;padding:60px 20px;color:#8FA7B0;font-size:15.5px;">No press items yet — check back soon.</div>
+      </sc-if>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer style="background:#0A2029;border-top:1px solid rgba(255,255,255,.06);padding:60px 40px 34px;">
+  <div style="max-width:1180px;margin:0 auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <span style="font-size:13px;color:#6E858E;">© 2026 Lenneuro, Inc. · All Rights Reserved.</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+// ============================================================================
+// PRESS ITEMS — add new entries to the top of this array (newest first).
+// type: 'pr' (press release, text only) | 'article' (link-preview card)
+//       | 'youtube' | 'vimeo' (16:9 video embed)
+// For youtube/vimeo, embedUrl must be the PLAYER embed URL, e.g.
+//   youtube: https://www.youtube.com/embed/VIDEO_ID
+//   vimeo:   https://player.vimeo.com/video/VIDEO_ID
+// ============================================================================
+const PRESS_ITEMS = [
+  {
+    type: 'pr',
+    date: 'May 27, 2026',
+    title: 'Lenneuro named to the inaugural MedTech Innovator 2026 Cohort & MTI Index',
+    excerpt: 'MedTech Innovator selected 65 startups — the top 4% of 1,835 global applicants — for its 2026 Accelerator Cohort, naming Lenneuro among the Cardiovascular & Interventional companies in the inaugural MTI Index.',
+    url: 'https://www.businesswire.com/news/home/20260527931356/en/MedTech-Innovator-Unveils-65-Startups-in-its-2026-Accelerator-Cohort-and-Launches-the-MTI-Index-the-Definitive-Recognition-Platform-for-MedTech-Innovation',
+  },
+  {
+    type: 'youtube',
+    date: 'April 21, 2026',
+    title: 'Lenneuro - Lightning Pitch',
+    embedUrl: 'https://www.youtube-nocookie.com/embed/xKNsakfhb-I',
+  },
+  {
+    type: 'youtube',
+    date: 'March 11, 2026',
+    title: 'Abbey Lenore - Sutures and Cents / Season 3 Ep 8',
+    embedUrl: 'https://www.youtube-nocookie.com/embed/GEXTO5Hc_fY',
+  },
+];
+
+class Component extends DCLogic {
+  renderVals() {
+    const items = PRESS_ITEMS.map((item) => ({
+      ...item,
+      isPR: item.type === 'pr',
+      isArticle: item.type === 'article',
+      isYoutube: item.type === 'youtube',
+      isVimeo: item.type === 'vimeo',
+    }));
+    return {
+      items,
+      isEmpty: items.length === 0,
+      navHover: (e) => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.background = 'rgba(23,208,176,0.1)'; },
+      navOut: (e) => { e.currentTarget.style.color = '#C7D6DD'; e.currentTarget.style.background = 'transparent'; },
+      btnHover: (e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 16px 36px -12px rgba(23,208,176,.8)'; },
+      btnOut: (e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 6px 18px -8px rgba(23,208,176,.6)'; },
+    };
+  }
+}
+
+</script>
+</body>
+</html>
