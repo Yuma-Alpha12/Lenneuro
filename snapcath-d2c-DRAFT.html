@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>SnapCath™ — Live Freely (D2C Concept Draft)</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: #F4F8FA;
+    color: #14384A;
+    font-family: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: #17D0B0; color: #0E2A37; }
+  a { color: inherit; }
+  img { max-width: 100%; }
+
+  @keyframes lnFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+  @keyframes lnPulse { 0%,100% { opacity: .35; } 50% { opacity: .9; } }
+
+  /* ---- Draft banner ---- */
+  .draft-banner {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    background: repeating-linear-gradient(45deg,#E0A12F,#E0A12F 14px,#c9902a 14px,#c9902a 28px);
+    color: #14384A; font-size: 12px; font-weight: 800; letter-spacing: .4px;
+    text-align: center; padding: 7px 14px; line-height: 1.35;
+  }
+  .draft-banner span { background: rgba(255,255,255,.85); padding: 2px 8px; border-radius: 4px; }
+
+  /* ---- Nav ---- */
+  .ln-header {
+    position: fixed; top: 30px; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 16px 30px; background: rgba(14,42,55,0.82);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(23,208,176,0.16);
+    transition: padding .3s ease, background .3s ease;
+  }
+  .ln-logo { display: inline-flex; background: #fff; padding: 7px 10px; border-radius: 6px; }
+  .ln-logo img { height: 24px; display: block; }
+  .ln-nav-links { display: flex; align-items: center; gap: 4px; flex: 1 1 auto; justify-content: center; }
+  .ln-nav-links a {
+    color: #C7D6DD; text-decoration: none; font-size: 14.5px; font-weight: 500;
+    padding: 8px 11px; border-radius: 8px; white-space: nowrap; transition: color .2s, background .2s;
+  }
+  .ln-nav-links a:hover { color: #fff; background: rgba(23,208,176,0.1); }
+  .ln-cta-btn {
+    flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px;
+    background: #17D0B0; color: #0E2A37; font-weight: 700; font-size: 14px;
+    text-decoration: none; padding: 11px 20px; border-radius: 8px;
+    box-shadow: 0 6px 18px -8px rgba(23,208,176,.6); transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .ln-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -12px rgba(23,208,176,.8); }
+  .ln-hamburger { display: none; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    background: #17D0B0; color: #0E2A37; font-weight: 700; font-size: 16px;
+    text-decoration: none; padding: 16px 28px; border-radius: 10px; border: none; cursor: pointer;
+    font-family: inherit; box-shadow: 0 10px 30px -12px rgba(23,208,176,.7);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 18px 44px -14px rgba(23,208,176,.9); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px; background: transparent;
+    color: #DCE7EB; font-weight: 600; font-size: 15.5px; text-decoration: none;
+    padding: 15px 24px; border-radius: 10px; border: 1px solid rgba(220,231,235,.28);
+    transition: border-color .2s ease, color .2s ease;
+  }
+  .btn-ghost:hover { border-color: rgba(23,208,176,.6); color: #fff; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; background: #17D0B0; color: #0E2A37;
+    font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+    padding: 7px 14px; border-radius: 5px;
+  }
+  .eyebrow.dark { background: #14384A; color: #fff; }
+  .eyebrow.pill { background: rgba(23,208,176,.12); border: 1px solid rgba(23,208,176,.4); color: #5FE6D0; border-radius: 100px; }
+
+  .wrap { max-width: 1180px; margin: 0 auto; }
+
+  /* ---- Reveal ---- */
+  [data-reveal] { opacity: 0; transform: translateY(26px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+  [data-reveal].shown { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { [data-reveal] { opacity: 1; transform: none; } }
+
+  @media (max-width: 900px) {
+    .ln-nav-links, .ln-cta-btn { display: none !important; }
+    .ln-hamburger { display: flex !important; }
+    .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+    .split-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
+    .benefit-grid, .steps-grid, .plan-grid, .testi-grid { grid-template-columns: 1fr !important; }
+    .reserve-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= INTERNAL DRAFT BANNER ================= -->
+<div class="draft-banner">
+  <span>INTERNAL DRAFT · CONCEPT ONLY</span>&nbsp; Direct-to-consumer store mockup imagining a post-clearance future. SnapCath™ is in development, not FDA cleared, and not for sale. Not for public release.
+</div>
+
+<!-- ================= NAV ================= -->
+<header class="ln-header" id="nav">
+  <a href="#top" class="ln-logo" aria-label="Lenneuro home"><img src="assets/lenneuro-logo.png" alt="Lenneuro"></a>
+  <nav class="ln-nav-links">
+    <a href="#why">Why SnapCath</a>
+    <a href="#how">How it works</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+  <a href="#reserve" class="ln-cta-btn">Reserve yours</a>
+  <button class="ln-hamburger" aria-label="Menu" onclick="document.getElementById('reserve').scrollIntoView()" style="flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:8px;">
+    <span style="display:block;width:22px;height:2px;background:#fff;border-radius:2px;"></span>
+    <span style="display:block;width:22px;height:2px;background:#fff;border-radius:2px;"></span>
+    <span style="display:block;width:22px;height:2px;background:#fff;border-radius:2px;"></span>
+  </button>
+</header>
+
+<!-- ================= HERO ================= -->
+<section id="top" style="position:relative;padding:190px 40px 96px;background:radial-gradient(120% 120% at 82% 8%, #1B4A5F 0%, #14384A 42%, #0E2A37 100%);overflow:hidden;color:#fff;">
+  <div aria-hidden="true" style="position:absolute;top:-18%;right:-8%;width:640px;height:640px;border-radius:50%;background:radial-gradient(circle, rgba(10,174,232,.18), transparent 62%);filter:blur(10px);animation:lnPulse 7s ease-in-out infinite;pointer-events:none;"></div>
+  <div aria-hidden="true" style="position:absolute;bottom:-22%;left:-10%;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle, rgba(23,208,176,.14), transparent 64%);filter:blur(10px);animation:lnPulse 9s ease-in-out infinite;pointer-events:none;"></div>
+  <div class="wrap hero-grid" style="position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;">
+    <div>
+      <div data-reveal class="eyebrow pill" style="margin-bottom:22px;">For people living with a line</div>
+      <h1 data-reveal style="margin:0 0 22px;font-size:clamp(42px,6vw,78px);line-height:1.02;font-weight:800;letter-spacing:-1.4px;">Shower. Sleep.<br>Live your life.</h1>
+      <p data-reveal style="margin:0 0 26px;max-width:520px;font-size:20px;line-height:1.55;color:#C7D6DD;">SnapCath™ is a single, all-in-one cover for your PICC line or catheter — designed to keep your site secure and protected so you can get back to the things a line shouldn't get in the way of.</p>
+      <div data-reveal style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:22px;">
+        <a href="#reserve" class="btn-primary">Reserve yours — $49</a>
+        <a href="#how" class="btn-ghost">See how it works</a>
+      </div>
+      <div data-reveal style="display:flex;flex-wrap:wrap;gap:20px;align-items:center;font-size:13.5px;color:#9FB4BC;">
+        <span>★★★★★ <span style="color:#DCE7EB;">Early-access reservations open</span></span>
+        <span style="opacity:.5;">|</span>
+        <span>Fully refundable deposit</span>
+      </div>
+    </div>
+    <div data-reveal class="ln-hero-visual" style="position:relative;justify-self:center;">
+      <div aria-hidden="true" style="position:absolute;inset:-40px;border-radius:50%;background:radial-gradient(circle, rgba(10,174,232,.22), transparent 60%);pointer-events:none;"></div>
+      <div style="position:relative;animation:lnFloat 6.5s ease-in-out infinite;">
+        <div style="position:absolute;inset:0;border:1px solid rgba(23,208,176,.35);border-radius:26px;transform:rotate(-3deg);"></div>
+        <img src="assets/hero-device.jpg" alt="SnapCath device" style="position:relative;display:block;width:430px;height:470px;object-fit:cover;border-radius:22px;box-shadow:0 40px 90px -30px rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.08);">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TRUST BAR ================= -->
+<section style="background:#0A2029;padding:22px 40px;color:#9FB4BC;">
+  <div class="wrap" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:18px 40px;align-items:center;font-size:14px;font-weight:600;">
+    <span>💧 Water-resistant for everyday wear</span>
+    <span>🩹 Less adhesive on your skin</span>
+    <span>🔓 Open the lid for site checks</span>
+    <span>🛡️ One cover, all-in-one</span>
+  </div>
+</section>
+
+<!-- ================= WHY / PROBLEM ================= -->
+<section id="why" style="padding:100px 40px;background:#fff;">
+  <div class="wrap split-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
+    <div data-reveal>
+      <div class="eyebrow dark" style="margin-bottom:22px;">Life with a line is hard enough</div>
+      <h2 style="margin:0 0 18px;font-size:clamp(28px,3.4vw,44px);font-weight:800;letter-spacing:-1px;line-height:1.1;color:#14384A;">You shouldn't have to plan your day around your line.</h2>
+      <p style="margin:0 0 16px;font-size:17px;color:#5A6B73;line-height:1.65;">Taping up before every shower. Worrying the site will snag on a sleeve or the sheets. Layers of dressings that tug at your skin. For the weeks or months you're living with a PICC line or catheter, the little things add up.</p>
+      <p style="margin:0;font-size:17px;color:#5A6B73;line-height:1.65;">SnapCath™ was designed by an ICU nurse who watched patients struggle with exactly this — and thought line care should feel a whole lot simpler.</p>
+    </div>
+    <div data-reveal style="display:flex;flex-direction:column;gap:14px;">
+      <div style="background:#F4F8FA;border:1px solid rgba(20,56,74,.08);border-left:3px solid #E0A12F;border-radius:14px;padding:22px 26px;">
+        <div style="font-weight:800;font-size:17px;margin-bottom:4px;">"Can I shower today?"</div>
+        <p style="margin:0;font-size:15px;color:#5A6B73;line-height:1.55;">Plastic wrap and tape shouldn't be part of your morning routine.</p>
+      </div>
+      <div style="background:#F4F8FA;border:1px solid rgba(20,56,74,.08);border-left:3px solid #0AAEE8;border-radius:14px;padding:22px 26px;">
+        <div style="font-weight:800;font-size:17px;margin-bottom:4px;">"Please don't snag."</div>
+        <p style="margin:0;font-size:15px;color:#5A6B73;line-height:1.55;">Getting dressed and sleeping shouldn't feel like a risk.</p>
+      </div>
+      <div style="background:#F4F8FA;border:1px solid rgba(20,56,74,.08);border-left:3px solid #17D0B0;border-radius:14px;padding:22px 26px;">
+        <div style="font-weight:800;font-size:17px;margin-bottom:4px;">"My skin is raw."</div>
+        <p style="margin:0;font-size:15px;color:#5A6B73;line-height:1.55;">Constant adhesive and re-taping takes a toll over weeks of wear.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BENEFITS ================= -->
+<section style="padding:100px 40px;background:#F4F8FA;">
+  <div class="wrap">
+    <div data-reveal style="max-width:760px;margin-bottom:48px;">
+      <div class="eyebrow" style="margin-bottom:22px;">Designed around you</div>
+      <h2 style="margin:0;font-size:clamp(28px,3.4vw,44px);font-weight:800;letter-spacing:-1px;line-height:1.1;color:#14384A;">One cover that does the whole job.</h2>
+    </div>
+    <div data-reveal class="benefit-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:18px;">
+      <div style="background:#fff;border:1px solid rgba(20,56,74,.08);border-radius:16px;padding:30px 32px;">
+        <div style="font-size:26px;margin-bottom:12px;">💧</div>
+        <h3 style="margin:0 0 8px;font-size:21px;font-weight:800;color:#14384A;letter-spacing:-.3px;">Shower without the wrap</h3>
+        <p style="margin:0;font-size:15.5px;color:#5A6B73;line-height:1.55;">Water-resistant by design, so a normal shower doesn't have to mean plastic wrap and tape every single time.</p>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(20,56,74,.08);border-radius:16px;padding:30px 32px;">
+        <div style="font-size:26px;margin-bottom:12px;">🩹</div>
+        <h3 style="margin:0 0 8px;font-size:21px;font-weight:800;color:#14384A;letter-spacing:-.3px;">Gentler on your skin</h3>
+        <p style="margin:0;font-size:15.5px;color:#5A6B73;line-height:1.55;">Built to limit how much adhesive touches your skin during wear — a relief over the long haul.</p>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(20,56,74,.08);border-radius:16px;padding:30px 32px;">
+        <div style="font-size:26px;margin-bottom:12px;">🔓</div>
+        <h3 style="margin:0 0 8px;font-size:21px;font-weight:800;color:#14384A;letter-spacing:-.3px;">Easy site checks</h3>
+        <p style="margin:0;font-size:15.5px;color:#5A6B73;line-height:1.55;">An openable lid lets a nurse or caregiver check and access your site without peeling everything off.</p>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(20,56,74,.08);border-radius:16px;padding:30px 32px;">
+        <div style="font-size:26px;margin-bottom:12px;">🛡️</div>
+        <h3 style="margin:0 0 8px;font-size:21px;font-weight:800;color:#14384A;letter-spacing:-.3px;">Secure & low-profile</h3>
+        <p style="margin:0;font-size:15.5px;color:#5A6B73;line-height:1.55;">Holds your line in place and covers the site in one piece, so there's less to snag on clothes and sheets.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section id="how" style="padding:100px 40px;background:#fff;">
+  <div class="wrap">
+    <div data-reveal style="text-align:center;max-width:680px;margin:0 auto 52px;">
+      <div class="eyebrow dark" style="margin-bottom:22px;">How it works</div>
+      <h2 style="margin:0;font-size:clamp(28px,3.4vw,44px);font-weight:800;letter-spacing:-1px;line-height:1.1;color:#14384A;">Three steps. No taping ritual.</h2>
+    </div>
+    <div data-reveal class="steps-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;">
+      <div style="text-align:center;padding:0 12px;">
+        <div style="width:54px;height:54px;margin:0 auto 18px;border-radius:50%;background:#17D0B0;color:#0E2A37;font-weight:800;font-size:22px;display:flex;align-items:center;justify-content:center;">1</div>
+        <h3 style="margin:0 0 8px;font-size:19px;font-weight:800;color:#14384A;">Place it</h3>
+        <p style="margin:0;font-size:15px;color:#5A6B73;line-height:1.6;">Position SnapCath™ over your line and site — a single piece, no layering.</p>
+      </div>
+      <div style="text-align:center;padding:0 12px;">
+        <div style="width:54px;height:54px;margin:0 auto 18px;border-radius:50%;background:#0AAEE8;color:#fff;font-weight:800;font-size:22px;display:flex;align-items:center;justify-content:center;">2</div>
+        <h3 style="margin:0 0 8px;font-size:19px;font-weight:800;color:#14384A;">Snap it shut</h3>
+        <p style="margin:0;font-size:15px;color:#5A6B73;line-height:1.6;">Close the lid to secure and protect the site. That's your everyday cover.</p>
+      </div>
+      <div style="text-align:center;padding:0 12px;">
+        <div style="width:54px;height:54px;margin:0 auto 18px;border-radius:50%;background:#E0A12F;color:#fff;font-weight:800;font-size:22px;display:flex;align-items:center;justify-content:center;">3</div>
+        <h3 style="margin:0 0 8px;font-size:19px;font-weight:800;color:#14384A;">Open when needed</h3>
+        <p style="margin:0;font-size:15px;color:#5A6B73;line-height:1.6;">Pop the lid for site checks or dressing changes — no full removal.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REVIEWS ================= -->
+<section id="reviews" style="padding:100px 40px;background:#F4F8FA;">
+  <div class="wrap">
+    <div data-reveal style="max-width:680px;margin-bottom:44px;">
+      <div class="eyebrow" style="margin-bottom:22px;">Early voices</div>
+      <h2 style="margin:0;font-size:clamp(28px,3.4vw,44px);font-weight:800;letter-spacing:-1px;line-height:1.1;color:#14384A;">What people hope for from line care.</h2>
+      <p style="margin:14px 0 0;font-size:13px;color:#8FA7B0;font-style:italic;">Illustrative quotes for this concept draft — placeholder, not real customer reviews.</p>
+    </div>
+    <div data-reveal class="testi-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
+      <div style="background:#fff;border:1px solid rgba(20,56,74,.08);border-radius:16px;padding:28px 30px;">
+        <div style="color:#E0A12F;font-size:16px;margin-bottom:10px;">★★★★★</div>
+        <p style="margin:0 0 16px;font-size:16px;color:#14384A;line-height:1.6;">"The first shower where I wasn't wrapping my arm in a trash bag felt like a small miracle."</p>
+        <div style="font-size:13.5px;color:#8FA7B0;font-weight:600;">Denise — PICC line, 6 weeks</div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(20,56,74,.08);border-radius:16px;padding:28px 30px;">
+        <div style="color:#E0A12F;font-size:16px;margin-bottom:10px;">★★★★★</div>
+        <p style="margin:0 0 16px;font-size:16px;color:#14384A;line-height:1.6;">"My nurse could check the site without peeling everything off. My skin finally caught a break."</p>
+        <div style="font-size:13.5px;color:#8FA7B0;font-weight:600;">Marcus — home infusion</div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(20,56,74,.08);border-radius:16px;padding:28px 30px;">
+        <div style="color:#E0A12F;font-size:16px;margin-bottom:10px;">★★★★★</div>
+        <p style="margin:0 0 16px;font-size:16px;color:#14384A;line-height:1.6;">"One cover instead of a pile of supplies. It just felt like it was made for a real person."</p>
+        <div style="font-size:13.5px;color:#8FA7B0;font-weight:600;">Priya — caregiver for her dad</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESERVE / PRICING ================= -->
+<section id="reserve" style="scroll-margin-top:110px;padding:100px 40px;background:radial-gradient(120% 120% at 85% 15%, #1B4A5F 0%, #14384A 45%, #0E2A37 100%);position:relative;overflow:hidden;color:#fff;">
+  <div aria-hidden="true" style="position:absolute;top:-30%;left:-6%;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle, rgba(23,208,176,.12), transparent 62%);pointer-events:none;animation:lnPulse 8s ease-in-out infinite;"></div>
+  <div class="wrap reserve-grid" style="position:relative;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;max-width:1000px;">
+    <div data-reveal>
+      <div class="eyebrow pill" style="margin-bottom:22px;">Reserve early access</div>
+      <h2 style="margin:0 0 16px;font-size:clamp(28px,3.3vw,42px);font-weight:800;letter-spacing:-1px;line-height:1.1;">Be first in line.</h2>
+      <p style="margin:0 0 24px;font-size:17px;color:#AFC3CB;line-height:1.55;">Reserve your SnapCath™ with a fully refundable $10 deposit. You'll lock in early-access pricing and we'll notify you the moment it's available.</p>
+      <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;">
+        <li style="display:flex;gap:10px;font-size:15.5px;color:#DCE7EB;"><span style="color:#5FE6D0;font-weight:800;">✓</span> Fully refundable — no commitment</li>
+        <li style="display:flex;gap:10px;font-size:15.5px;color:#DCE7EB;"><span style="color:#5FE6D0;font-weight:800;">✓</span> Early-access price locked at $49</li>
+        <li style="display:flex;gap:10px;font-size:15.5px;color:#DCE7EB;"><span style="color:#5FE6D0;font-weight:800;">✓</span> First to know when it ships</li>
+      </ul>
+    </div>
+
+    <div data-reveal style="background:rgba(14,42,55,.72);backdrop-filter:blur(10px);border:1px solid rgba(23,208,176,.22);border-radius:18px;padding:32px 30px;box-shadow:0 30px 70px -30px rgba(0,0,0,.6);">
+      <!-- Pricing plans -->
+      <div class="plan-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px;">
+        <label class="plan" data-plan="single" style="cursor:pointer;border:1px solid rgba(23,208,176,.55);background:rgba(23,208,176,.08);border-radius:12px;padding:16px 14px;text-align:center;">
+          <div style="font-size:13px;color:#9FB4BC;font-weight:600;">Single</div>
+          <div style="font-size:26px;font-weight:800;color:#fff;">$49</div>
+          <div style="font-size:12px;color:#9FB4BC;">one cover</div>
+        </label>
+        <label class="plan" data-plan="pack" style="cursor:pointer;border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:16px 14px;text-align:center;position:relative;">
+          <div style="position:absolute;top:-10px;right:10px;background:#E0A12F;color:#14384A;font-size:10px;font-weight:800;letter-spacing:.5px;padding:2px 8px;border-radius:20px;">SAVE 15%</div>
+          <div style="font-size:13px;color:#9FB4BC;font-weight:600;">4-pack</div>
+          <div style="font-size:26px;font-weight:800;color:#fff;">$166</div>
+          <div style="font-size:12px;color:#9FB4BC;">$41.50 each</div>
+        </label>
+      </div>
+
+      <form id="reserveForm" onsubmit="return false;">
+        <label for="email" style="display:block;font-size:13px;font-weight:600;color:#DCE7EB;margin-bottom:8px;">Email address <span style="color:#5FE6D0;">*</span></label>
+        <input type="email" id="email" required placeholder="you@example.com" style="width:100%;background:#0E2A37;border:1px solid rgba(255,255,255,.14);border-radius:9px;padding:14px 16px;color:#fff;font-size:15px;font-family:inherit;margin-bottom:14px;outline:none;">
+        <button type="submit" class="btn-primary" style="width:100%;font-size:16px;">Reserve now — $10 deposit</button>
+        <p style="margin:14px 0 0;font-size:11.5px;color:#6E858E;line-height:1.5;text-align:center;">Refundable deposit. Concept mockup — no real charge is made on this draft page.</p>
+      </form>
+
+      <div id="reserveSuccess" style="display:none;text-align:center;padding:14px 0 4px;">
+        <div style="font-size:30px;margin-bottom:10px;">✓</div>
+        <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:6px;">You're reserved.</div>
+        <div style="font-size:13.5px;color:#9FB4BC;line-height:1.5;">We'll email you the moment SnapCath™ is available.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq" style="padding:100px 40px;background:#fff;">
+  <div class="wrap" style="max-width:820px;">
+    <div data-reveal style="margin-bottom:40px;">
+      <div class="eyebrow dark" style="margin-bottom:22px;">Questions</div>
+      <h2 style="margin:0;font-size:clamp(28px,3.4vw,44px);font-weight:800;letter-spacing:-1px;line-height:1.1;color:#14384A;">Good to know.</h2>
+    </div>
+    <div data-reveal id="faqList"></div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer style="background:#0A2029;border-top:1px solid rgba(255,255,255,.06);padding:60px 40px 40px;color:#6E858E;">
+  <div class="wrap">
+    <div style="margin-bottom:26px;"><span class="ln-logo"><img src="assets/lenneuro-logo.png" alt="Lenneuro"></span></div>
+    <p style="margin:0 0 12px;font-size:12px;line-height:1.6;max-width:860px;color:#8FA7B0;font-weight:700;">DRAFT / CONCEPT NOTICE: This page is an internal direct-to-consumer store mockup that imagines a possible future after regulatory clearance. It is not published, not approved marketing, and not for public distribution.</p>
+    <p style="margin:0 0 22px;font-size:12px;line-height:1.6;max-width:860px;">SnapCath™ is an external catheter securement accessory under development by Lenneuro, Inc. It has not been cleared or approved by the U.S. Food and Drug Administration and is not available for sale or commercial distribution. Pricing, benefit statements, product images, and reviews shown here are placeholders for concept purposes only and do not represent cleared claims, real customers, or offers for sale.</p>
+    <span style="font-size:13px;">© 2026 Lenneuro, Inc. · All Rights Reserved.</span>
+  </div>
+</footer>
+
+<script>
+  // ---- Reveal on scroll ----
+  (function () {
+    var reveals = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) { reveals.forEach(function (el) { el.classList.add('shown'); }); }
+    else if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('shown'); io.unobserve(en.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+      reveals.forEach(function (el) { io.observe(el); });
+      // reveal anything already on screen
+      reveals.forEach(function (el) { var r = el.getBoundingClientRect(); if (r.top < window.innerHeight) el.classList.add('shown'); });
+    } else { reveals.forEach(function (el) { el.classList.add('shown'); }); }
+  })();
+
+  // ---- Nav condense ----
+  (function () {
+    var nav = document.getElementById('nav');
+    function onScroll() {
+      if (window.scrollY > 40) { nav.style.padding = '12px 30px'; nav.style.background = 'rgba(14,42,55,0.94)'; }
+      else { nav.style.padding = '16px 30px'; nav.style.background = 'rgba(14,42,55,0.82)'; }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  })();
+
+  // ---- Plan selection ----
+  (function () {
+    var plans = document.querySelectorAll('.plan');
+    plans.forEach(function (p) {
+      p.addEventListener('click', function () {
+        plans.forEach(function (x) { x.style.border = '1px solid rgba(255,255,255,.14)'; x.style.background = 'transparent'; });
+        p.style.border = '1px solid rgba(23,208,176,.55)'; p.style.background = 'rgba(23,208,176,.08)';
+      });
+    });
+  })();
+
+  // ---- Reserve form ----
+  (function () {
+    var form = document.getElementById('reserveForm');
+    form.addEventListener('submit', function () {
+      form.style.display = 'none';
+      document.getElementById('reserveSuccess').style.display = 'block';
+    });
+  })();
+
+  // ---- FAQ accordion ----
+  (function () {
+    var faqs = [
+      ['Is SnapCath available to buy right now?', 'Not yet. SnapCath™ is still in development and has not been cleared by the FDA. This page lets you reserve early access so you\'re first to know when it becomes available. (On this internal draft, no real reservation or charge is processed.)'],
+      ['What kinds of lines is it for?', 'SnapCath™ is being designed as an external cover and securement accessory for common vascular access lines such as PICC lines and catheters. Final compatibility details will be confirmed as development progresses.'],
+      ['Can I really shower with it?', 'Water resistance for everyday wear is a core design goal and is being evaluated during development. Always follow your care team\'s guidance for your specific line.'],
+      ['Is the deposit refundable?', 'Yes. Reservations are backed by a fully refundable deposit with no obligation to purchase later.'],
+      ['Will my nurse be able to access the site?', 'That\'s the idea — an openable lid is designed to allow routine site checks and access without removing the whole cover.']
+    ];
+    var list = document.getElementById('faqList');
+    faqs.forEach(function (f) {
+      var item = document.createElement('div');
+      item.style.cssText = 'border-bottom:1px solid rgba(20,56,74,.1);';
+      var q = document.createElement('button');
+      q.textContent = f[0];
+      q.style.cssText = 'width:100%;text-align:left;background:none;border:none;cursor:pointer;font-family:inherit;font-size:18px;font-weight:700;color:#14384A;padding:22px 0;display:flex;justify-content:space-between;gap:16px;align-items:center;';
+      var mark = document.createElement('span'); mark.textContent = '+'; mark.style.cssText = 'color:#17D0B0;font-size:24px;font-weight:400;flex:0 0 auto;';
+      q.appendChild(mark);
+      var a = document.createElement('div');
+      a.textContent = f[1];
+      a.style.cssText = 'max-height:0;overflow:hidden;transition:max-height .3s ease;font-size:16px;color:#5A6B73;line-height:1.65;';
+      q.addEventListener('click', function () {
+        var open = a.style.maxHeight && a.style.maxHeight !== '0px';
+        a.style.maxHeight = open ? '0px' : a.scrollHeight + 24 + 'px';
+        a.style.paddingBottom = open ? '0' : '22px';
+        mark.textContent = open ? '+' : '–';
+      });
+      item.appendChild(q); item.appendChild(a); list.appendChild(item);
+    });
+  })();
+</script>
+</body>
+</html>
