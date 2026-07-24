@@ -48,7 +48,7 @@
     <a href="Team.dc.html" style="color:#C7D6DD;text-decoration:none;font-size:14.5px;font-weight:500;letter-spacing:.1px;padding:8px 11px;border-radius:8px;white-space:nowrap;transition:color .2s,background .2s;" onMouseOver="{{ navHover }}" onMouseOut="{{ navOut }}">Meet the Team</a>
     <a href="Contact.dc.html" style="color:#fff;text-decoration:none;font-size:14.5px;font-weight:700;letter-spacing:.1px;padding:8px 11px;border-radius:8px;white-space:nowrap;background:rgba(23,208,176,0.16);">Contact</a>
   </nav>
-  <a href="#signup" class="ln-cta-btn" style="flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;background:#17D0B0;color:#0E2A37;font-weight:700;font-size:14px;letter-spacing:.2px;text-decoration:none;padding:11px 20px;border-radius:8px;transition:transform .2s ease, box-shadow .2s ease;box-shadow:0 6px 18px -8px rgba(23,208,176,.6);" onMouseOver="{{ btnHover }}" onMouseOut="{{ btnOut }}">Join the list</a>
+  <a href="#signup" data-open-signup class="ln-cta-btn" style="flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;background:#17D0B0;color:#0E2A37;font-weight:700;font-size:14px;letter-spacing:.2px;text-decoration:none;padding:11px 20px;border-radius:8px;transition:transform .2s ease, box-shadow .2s ease;box-shadow:0 6px 18px -8px rgba(23,208,176,.6);" onMouseOver="{{ btnHover }}" onMouseOut="{{ btnOut }}">Join the list</a>
   <button aria-label="Menu" onClick="{{ toggleMenu }}" class="ln-hamburger" style="flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:8px;flex:0 0 auto;">
     <span style="display:block;width:22px;height:2px;background:#fff;border-radius:2px;"></span>
     <span style="display:block;width:22px;height:2px;background:#fff;border-radius:2px;"></span>
@@ -91,46 +91,11 @@
 
     <!-- Mailchimp embed, styled to match the card -->
     <div style="background:#14384A;border:1px solid rgba(23,208,176,.22);border-radius:18px;padding:32px 30px;box-shadow:0 30px 70px -30px rgba(14,42,55,.5);">
-      <div id="mc_embed_signup">
+      <div>
         <h2 style="margin:0 0 6px;font-size:20px;font-weight:800;color:#fff;letter-spacing:-.2px;">Subscribe</h2>
-        <p style="margin:0 0 20px;font-size:13.5px;color:#9FB4BC;line-height:1.5;">Get updates on SnapCath™ milestones, no spam, unsubscribe anytime.</p>
-
-        <form
-          action="https://lenneuro.us19.list-manage.com/subscribe/post?u=1d4e67cf4a49ebeb7f2282c52&amp;id=59a66f53fd&amp;f_id=00e8c2e1f0"
-          method="post"
-          id="mc-embedded-subscribe-form"
-          name="mc-embedded-subscribe-form"
-          target="mc_signup_iframe"
-          onSubmit="{{ handleSubmit }}"
-          style="{{ formStyle }}"
-        >
-          <label for="mce-EMAIL" style="display:block;font-size:13px;font-weight:600;color:#DCE7EB;margin-bottom:8px;">Email address <span style="color:#5FE6D0;">*</span></label>
-          <input
-            type="email"
-            name="EMAIL"
-            id="mce-EMAIL"
-            required=""
-            placeholder="you@example.com"
-            style="width:100%;background:#0E2A37;border:1px solid rgba(255,255,255,.14);border-radius:9px;padding:14px 16px;color:#fff;font-size:15px;font-family:inherit;margin-bottom:14px;outline:none;"
-          >
-
-          <!-- Mailchimp bot-protection honeypot — must stay hidden and empty -->
-          <div aria-hidden="true" style="position:absolute;left:-5000px;">
-            <input type="text" name="b_1d4e67cf4a49ebeb7f2282c52_59a66f53fd" tabindex="-1" value="">
-          </div>
-
-          <button type="submit" name="subscribe" id="mc-embedded-subscribe" style="width:100%;background:#17D0B0;color:#0E2A37;font-weight:700;font-size:15.5px;border:none;border-radius:9px;padding:14px;cursor:pointer;font-family:inherit;transition:transform .15s ease, box-shadow .15s ease;" onMouseOver="{{ btnHover }}" onMouseOut="{{ btnOut }}">Subscribe</button>
-
-          <p style="margin:14px 0 0;font-size:11.5px;color:#6E858E;line-height:1.5;text-align:center;">We respect your privacy. Unsubscribe anytime.</p>
-        </form>
-
-        <div style="{{ successStyle }}">
-          <div style="font-size:30px;margin-bottom:10px;">✓</div>
-          <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:6px;">You're on the list.</div>
-          <div style="font-size:13.5px;color:#9FB4BC;line-height:1.5;">Check your inbox to confirm your subscription.</div>
-        </div>
-
-        <iframe name="mc_signup_iframe" title="Mailchimp signup" style="display:none;"></iframe>
+        <p style="margin:0 0 22px;font-size:13.5px;color:#9FB4BC;line-height:1.5;">Get updates on SnapCath™ milestones, no spam, unsubscribe anytime.</p>
+        <a href="#signup" data-open-signup role="button" style="box-sizing:border-box;width:100%;text-align:center;display:inline-flex;align-items:center;justify-content:center;background:#17D0B0;color:#0E2A37;font-weight:700;font-size:15.5px;border:none;border-radius:9px;padding:14px;cursor:pointer;font-family:inherit;text-decoration:none;transition:transform .15s ease, box-shadow .15s ease;box-shadow:0 6px 18px -8px rgba(23,208,176,.6);" onMouseOver="{{ btnHover }}" onMouseOut="{{ btnOut }}">Join the list</a>
+        <p style="margin:14px 0 0;font-size:11.5px;color:#6E858E;line-height:1.5;text-align:center;">We respect your privacy. Unsubscribe anytime.</p>
       </div>
     </div>
 
@@ -176,5 +141,6 @@ class Component extends DCLogic {
 }
 
 </script>
+<script src="assets/ln-signup.js" defer></script>
 </body>
 </html>

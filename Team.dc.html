@@ -53,7 +53,7 @@
     <a href="Team.dc.html" style="color:#fff;text-decoration:none;font-size:14.5px;font-weight:700;letter-spacing:.1px;padding:8px 11px;border-radius:8px;white-space:nowrap;background:rgba(23,208,176,0.16);">Meet the Team</a>
     <a href="Contact.dc.html" style="color:#C7D6DD;text-decoration:none;font-size:14.5px;font-weight:500;letter-spacing:.1px;padding:8px 11px;border-radius:8px;white-space:nowrap;transition:color .2s,background .2s;" onMouseOver="{{ navHover }}" onMouseOut="{{ navOut }}">Contact</a>
   </nav>
-  <a href="Contact.dc.html" class="ln-cta-btn" style="flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;background:#17D0B0;color:#0E2A37;font-weight:700;font-size:14px;letter-spacing:.2px;text-decoration:none;padding:11px 20px;border-radius:8px;transition:transform .2s ease, box-shadow .2s ease;box-shadow:0 6px 18px -8px rgba(23,208,176,.6);" onMouseOver="{{ btnHover }}" onMouseOut="{{ btnOut }}">Join the list</a>
+  <a href="Contact.dc.html" data-open-signup class="ln-cta-btn" style="flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;background:#17D0B0;color:#0E2A37;font-weight:700;font-size:14px;letter-spacing:.2px;text-decoration:none;padding:11px 20px;border-radius:8px;transition:transform .2s ease, box-shadow .2s ease;box-shadow:0 6px 18px -8px rgba(23,208,176,.6);" onMouseOver="{{ btnHover }}" onMouseOut="{{ btnOut }}">Join the list</a>
   <button aria-label="Menu" onClick="{{ toggleMenu }}" class="ln-hamburger" style="flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:8px;flex:0 0 auto;">
     <span style="display:block;width:22px;height:2px;background:#fff;border-radius:2px;"></span>
     <span style="display:block;width:22px;height:2px;background:#fff;border-radius:2px;"></span>
@@ -218,5 +218,6 @@ class Component extends DCLogic {
 }
 
 </script>
+<script src="assets/ln-signup.js" defer></script>
 </body>
 </html>
