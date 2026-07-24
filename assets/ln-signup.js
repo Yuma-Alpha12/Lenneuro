@@ -1,7 +1,11 @@
 /* Lenneuro - custom "Join the list" signup popup.
- * Site-styled modal that maps to the HubSpot form
+ * Site-styled two-step modal that maps to the HubSpot form
  * (portal 246160635 / form ed3a0cae-38ca-423f-b713-a94b5fc4c8eb)
  * and submits directly to the HubSpot Forms v3 submission API.
+ *
+ * Step 1: first name, last name, email (all required)
+ * Step 2: "How would you describe your interest?" -> contact property `lead_type`
+ *         Clinician -> Clinicians, Patient -> Patients, Investor -> Investors
  *
  * Trigger any element with the attribute  data-open-signup  to open it. */
 (function () {
@@ -13,6 +17,13 @@
     "https://api-na2.hsforms.com/submissions/v3/integration/submit/" +
     PORTAL_ID + "/" + FORM_ID;
 
+  // Interest options: display label -> HubSpot internal value for `lead_type`.
+  var INTEREST_OPTIONS = [
+    { label: "Clinician", value: "Clinicians" },
+    { label: "Patient", value: "Patients" },
+    { label: "Investor", value: "Investors" }
+  ];
+
   var TEAL = "#17D0B0";
   var reduce =
     window.matchMedia &&
@@ -21,6 +32,7 @@
   var root = null; // outer overlay element
   var lastFocus = null;
   var built = false;
+  var step = 1;
 
   function injectStyles() {
     if (document.getElementById("ln-signup-styles")) return;
@@ -40,6 +52,9 @@
       (reduce
         ? "#ln-signup-overlay,#ln-signup-card{transition:none!important;}"
         : "") +
+      ".ln-steps{display:flex;gap:6px;margin-bottom:16px;}" +
+      ".ln-steps i{height:4px;flex:1 1 0;border-radius:100px;background:rgba(255,255,255,.14);transition:background .2s ease;}" +
+      ".ln-steps i.ln-on{background:" + TEAL + ";}" +
       ".ln-eyebrow{display:inline-flex;align-items:center;background:rgba(23,208,176,.12);" +
       "border:1px solid rgba(23,208,176,.4);color:#5FE6D0;font-size:10.5px;font-weight:700;" +
       "letter-spacing:2.5px;text-transform:uppercase;padding:6px 13px;border-radius:100px;margin-bottom:18px;}" +
@@ -56,12 +71,29 @@
       ".ln-signup-input::placeholder{color:#6E858E;}" +
       ".ln-signup-input:focus{border-color:" + TEAL + ";box-shadow:0 0 0 3px rgba(23,208,176,.18);}" +
       ".ln-signup-input.ln-invalid{border-color:#E06B6B;box-shadow:0 0 0 3px rgba(224,107,107,.18);}" +
+      ".ln-options{margin-bottom:8px;}" +
+      ".ln-opt{display:flex;align-items:center;gap:13px;padding:14px 16px;border:1px solid rgba(255,255,255,.14);" +
+      "border-radius:11px;background:#0E2A37;cursor:pointer;margin-bottom:10px;" +
+      "transition:border-color .15s ease,background .15s ease;}" +
+      ".ln-opt:hover{border-color:rgba(23,208,176,.5);}" +
+      ".ln-opt.ln-selected{border-color:" + TEAL + ";background:rgba(23,208,176,.1);}" +
+      ".ln-opt input{position:absolute;opacity:0;width:0;height:0;pointer-events:none;}" +
+      ".ln-dot{flex:0 0 auto;width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.32);" +
+      "display:flex;align-items:center;justify-content:center;transition:border-color .15s ease;}" +
+      ".ln-opt.ln-selected .ln-dot{border-color:" + TEAL + ";}" +
+      ".ln-dot::after{content:'';width:10px;height:10px;border-radius:50%;background:" + TEAL + ";" +
+      "transform:scale(0);transition:transform .15s ease;}" +
+      ".ln-opt.ln-selected .ln-dot::after{transform:scale(1);}" +
+      ".ln-opt .ln-opt-label{font-size:15px;font-weight:600;color:#EAF2F5;}" +
       ".ln-signup-btn{width:100%;margin-top:6px;background:" + TEAL + ";color:#0E2A37;font-weight:700;" +
       "font-size:15.5px;border:none;border-radius:9px;padding:14px;cursor:pointer;font-family:inherit;" +
       "display:inline-flex;align-items:center;justify-content:center;gap:9px;" +
       "transition:transform .15s ease,box-shadow .15s ease,opacity .15s ease;box-shadow:0 6px 18px -8px rgba(23,208,176,.6);}" +
       ".ln-signup-btn:hover{transform:translateY(-2px);box-shadow:0 16px 36px -12px rgba(23,208,176,.8);}" +
       ".ln-signup-btn[disabled]{opacity:.65;cursor:default;transform:none;box-shadow:none;}" +
+      ".ln-back{display:block;margin:12px auto 0;background:none;border:none;color:#9FB4BC;font-size:13px;" +
+      "font-family:inherit;cursor:pointer;padding:4px 8px;transition:color .15s ease;}" +
+      ".ln-back:hover{color:#fff;}" +
       ".ln-note{margin:14px 0 0;font-size:11.5px;color:#6E858E;line-height:1.5;text-align:center;}" +
       ".ln-error{margin:12px 0 0;font-size:12.5px;color:#F0A5A5;line-height:1.5;text-align:center;display:none;}" +
       ".ln-close{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:9px;" +
@@ -84,6 +116,20 @@
     document.head.appendChild(s);
   }
 
+  function optionsHTML() {
+    var html = "";
+    for (var i = 0; i < INTEREST_OPTIONS.length; i++) {
+      var o = INTEREST_OPTIONS[i];
+      html +=
+        '<label class="ln-opt">' +
+        '<input type="radio" name="lead_type" value="' + o.value + '">' +
+        '<span class="ln-dot"></span>' +
+        '<span class="ln-opt-label">' + o.label + '</span>' +
+        '</label>';
+    }
+    return html;
+  }
+
   function build() {
     if (built) return;
     built = true;
@@ -99,10 +145,14 @@
       '<div id="ln-signup-card">' +
       '<button type="button" class="ln-close" aria-label="Close">&times;</button>' +
       '<div class="ln-form-wrap">' +
+      '<div class="ln-steps"><i class="ln-on"></i><i></i></div>' +
+      '<form novalidate>' +
+
+      // ---- Step 1 ----
+      '<div class="ln-step ln-step1">' +
       '<span class="ln-eyebrow">Stay in the loop</span>' +
       '<h2 id="ln-signup-title">Join the list</h2>' +
-      '<p class="ln-sub">Get updates on SnapCath\u2122 development milestones, regulatory progress, and future product availability. No spam \u2014 unsubscribe anytime.</p>' +
-      '<form novalidate>' +
+      '<p class="ln-sub">Get updates on SnapCath\u2122 development milestones, regulatory progress, and future product availability. Unsubscribe anytime.</p>' +
       '<div class="ln-row">' +
       '<div class="ln-field"><label class="ln-signup-label" for="ln-firstname">First name <span>*</span></label>' +
       '<input class="ln-signup-input" type="text" id="ln-firstname" name="firstname" autocomplete="given-name" required></div>' +
@@ -111,11 +161,25 @@
       '</div>' +
       '<div class="ln-field"><label class="ln-signup-label" for="ln-email">Email <span>*</span></label>' +
       '<input class="ln-signup-input" type="email" id="ln-email" name="email" placeholder="you@example.com" autocomplete="email" required></div>' +
-      '<button type="submit" class="ln-signup-btn">Join the list</button>' +
-      '<p class="ln-error" role="alert"></p>' +
+      '<button type="submit" class="ln-signup-btn ln-continue">Continue</button>' +
+      '<p class="ln-error ln-error-1" role="alert"></p>' +
       '<p class="ln-note">We respect your privacy. Unsubscribe anytime.</p>' +
+      '</div>' +
+
+      // ---- Step 2 ----
+      '<div class="ln-step ln-step2" style="display:none;">' +
+      '<span class="ln-eyebrow">One last step</span>' +
+      '<h2>How would you describe your interest?</h2>' +
+      '<p class="ln-sub">This helps us send you the most relevant updates.</p>' +
+      '<div class="ln-options">' + optionsHTML() + '</div>' +
+      '<button type="submit" class="ln-signup-btn ln-final">Join the list</button>' +
+      '<p class="ln-error ln-error-2" role="alert"></p>' +
+      '<button type="button" class="ln-back">&larr; Back</button>' +
+      '</div>' +
+
       '</form>' +
       '</div>' +
+
       '<div class="ln-success" style="display:none;">' +
       '<div class="ln-check">\u2713</div>' +
       '<h2>You\u2019re on the list.</h2>' +
@@ -129,6 +193,32 @@
       if (e.target === root) close();
     });
     root.querySelector("form").addEventListener("submit", onSubmit);
+    root.querySelector(".ln-back").addEventListener("click", goToStep1);
+
+    // option selection highlight
+    root.querySelector(".ln-options").addEventListener("change", function () {
+      Array.prototype.forEach.call(root.querySelectorAll(".ln-opt"), function (l) {
+        var input = l.querySelector("input");
+        l.classList.toggle("ln-selected", input.checked);
+      });
+      hideError();
+    });
+  }
+
+  function setStep(n) {
+    step = n;
+    root.querySelector(".ln-step1").style.display = n === 1 ? "" : "none";
+    root.querySelector(".ln-step2").style.display = n === 2 ? "" : "none";
+    var dots = root.querySelectorAll(".ln-steps i");
+    dots[0].classList.toggle("ln-on", true);
+    dots[1].classList.toggle("ln-on", n === 2);
+  }
+
+  function goToStep1() {
+    setStep(1);
+    hideError();
+    var f = root.querySelector("#ln-firstname");
+    if (f) f.focus();
   }
 
   function open() {
@@ -186,23 +276,44 @@
     Array.prototype.forEach.call(form.querySelectorAll(".ln-invalid"), function (el) {
       el.classList.remove("ln-invalid");
     });
-    var err = root.querySelector(".ln-error");
-    err.style.display = "none";
-    err.textContent = "";
-    var btn = form.querySelector(".ln-signup-btn");
+    Array.prototype.forEach.call(root.querySelectorAll(".ln-opt"), function (l) {
+      l.classList.remove("ln-selected");
+    });
+    hideError();
+    var btn = root.querySelector(".ln-final");
     btn.disabled = false;
     btn.textContent = "Join the list";
+    setStep(1);
+  }
+
+  function currentError() {
+    return root.querySelector(step === 1 ? ".ln-error-1" : ".ln-error-2");
   }
 
   function showError(msg) {
-    var err = root.querySelector(".ln-error");
+    var err = currentError();
     err.textContent = msg;
     err.style.display = "block";
   }
 
+  function hideError() {
+    Array.prototype.forEach.call(root.querySelectorAll(".ln-error"), function (e) {
+      e.style.display = "none";
+      e.textContent = "";
+    });
+  }
+
   function onSubmit(e) {
     e.preventDefault();
-    var form = e.currentTarget;
+    if (step === 1) {
+      advanceIfValid();
+    } else {
+      submitForm();
+    }
+  }
+
+  function advanceIfValid() {
+    var form = root.querySelector("form");
     var fn = form.firstname.value.trim();
     var ln = form.lastname.value.trim();
     var em = form.email.value.trim();
@@ -216,16 +327,32 @@
     });
     if (!ok) { showError("Please enter your name and a valid email address."); return; }
 
-    var btn = form.querySelector(".ln-signup-btn");
+    hideError();
+    setStep(2);
+    var firstOpt = root.querySelector('.ln-opt input');
+    if (firstOpt) firstOpt.focus();
+  }
+
+  function submitForm() {
+    var form = root.querySelector("form");
+    var fn = form.firstname.value.trim();
+    var ln = form.lastname.value.trim();
+    var em = form.email.value.trim();
+    var interest = form.querySelector('input[name="lead_type"]:checked');
+
+    if (!interest) { showError("Please choose the option that best describes you."); return; }
+
+    var btn = root.querySelector(".ln-final");
     btn.disabled = true;
     btn.innerHTML = '<span class="ln-spin"></span> Joining\u2026';
-    root.querySelector(".ln-error").style.display = "none";
+    hideError();
 
     var payload = {
       fields: [
         { name: "firstname", value: fn },
         { name: "lastname", value: ln },
-        { name: "email", value: em }
+        { name: "email", value: em },
+        { name: "lead_type", value: interest.value }
       ],
       context: {
         pageUri: window.location.href,
@@ -256,7 +383,14 @@
           var invalidEmail = res.data.errors.some(function (er) {
             return (er.errorType || "").indexOf("EMAIL") !== -1;
           });
-          if (invalidEmail) msg = "Please enter a valid email address.";
+          if (invalidEmail) {
+            msg = "Please enter a valid email address.";
+            btn.disabled = false;
+            btn.textContent = "Join the list";
+            setStep(1);
+            showError(msg);
+            return;
+          }
         }
         showError(msg);
         btn.disabled = false;
