@@ -58,7 +58,19 @@
     "https://api-na2.hsforms.com/submissions/v3/integration/submit/" +
     PORTAL_ID + "/" + FORM_ID;
 
-  var MAX_RETRIES = 4; // retries after dropping fields HubSpot rejects
+  // Enough to shed every optional field one at a time. HubSpot sometimes
+  // reports only the first offending field per response, so a low cap here
+  // exhausts the retries and surfaces a generic error instead of recovering.
+  var MAX_RETRIES = 24;
+
+  // Fields that must survive for the submission to be worth anything. If
+  // HubSpot rejects one of these there is a real configuration problem.
+  var CORE = ["firstname", "lastname", "email"];
+
+  // Setup aid: append HubSpot's own error text to the on-screen message so a
+  // failure can be diagnosed from a screenshot. Flip to false before this
+  // page is shared with clinicians.
+  var SHOW_RAW_ERRORS = true;
 
   // ---- helpers -----------------------------------------------------------
 
@@ -296,7 +308,18 @@
         return { ok: true, dropped: dropped };
       }
 
-      var bad = rejectedFieldNames(res.data);
+      // Always log the raw exchange. This is the only way to diagnose a
+      // HubSpot-side misconfiguration from a browser.
+      console.error(
+        "[Lenneuro LOI] HubSpot rejected the submission.\n" +
+        "status: " + res.status + "\n" +
+        "response: " + JSON.stringify(res.data, null, 2) + "\n" +
+        "sent: " + JSON.stringify(fields, null, 2)
+      );
+
+      var bad = rejectedFieldNames(res.data).filter(function (n) {
+        return CORE.indexOf(n) === -1;
+      });
       if (bad.length && attempt < MAX_RETRIES) {
         var next = fields.filter(function (f) {
           return bad.indexOf(f.name) === -1;
@@ -304,6 +327,26 @@
         if (next.length !== fields.length) {
           return submitWithFallback(next, dropped.concat(bad), attempt + 1);
         }
+      }
+
+      // Last resort: never lose a real clinician over a config problem.
+      // Try name and email alone before giving up.
+      var isMinimal = fields.length <= CORE.length;
+      if (!isMinimal) {
+        var minimal = fields.filter(function (f) {
+          return CORE.indexOf(f.name) !== -1;
+        });
+        return post(minimal).then(function (r2) {
+          if (r2.ok) {
+            console.error(
+              "[Lenneuro LOI] Only name and email were saved. Everything " +
+              "else was rejected by HubSpot. Fix the form before sharing " +
+              "this page. See the response logged above."
+            );
+            return { ok: true, dropped: ["everything except name and email"] };
+          }
+          return { ok: false, res: res };
+        });
       }
       return { ok: false, res: res };
     });
@@ -320,7 +363,22 @@
         return "This submission was blocked. Please email info@lenneuro.com and we'll take it from there.";
       }
     }
-    return "Something went wrong on our end. Please try again, or email info@lenneuro.com and we'll record your letter manually.";
+    var base = "Something went wrong on our end. Please try again, or email " +
+      "info@lenneuro.com and we'll record your letter manually.";
+
+    // While the page is unlisted and being set up, surface HubSpot's own
+    // reason on screen too. Diagnosing this from a screenshot is otherwise
+    // impossible. Set SHOW_RAW_ERRORS to false once it is live.
+    if (SHOW_RAW_ERRORS && errors.length) {
+      var raw = errors.map(function (e) {
+        return (e.errorType || "?") + ": " + (e.message || "");
+      }).join(" | ");
+      return base + "  [" + res.status + " " + raw + "]";
+    }
+    if (SHOW_RAW_ERRORS && res && res.status) {
+      return base + "  [HTTP " + res.status + ", no error detail returned]";
+    }
+    return base;
   }
 
   function setBusy(busy) {
