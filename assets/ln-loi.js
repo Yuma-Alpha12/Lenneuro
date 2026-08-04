@@ -27,8 +27,17 @@
  *      ln_loi_citation_consent      (new)      single checkbox
  *      ln_loi_updates_opt_in        (new)      single checkbox
  *
- *    Dropdown values must match exactly the option values in
- *    clinicians/index.html (see the <select> elements).
+ *    IMPORTANT for the three dropdowns: HubSpot matches on the option's
+ *    internal value. When you create an option by typing only a label,
+ *    HubSpot sets the internal value equal to that label. So this page
+ *    sends the label text verbatim, e.g. "Critical care / ICU", and the
+ *    HubSpot option labels must read EXACTLY the same, punctuation and
+ *    spacing included. The full list is in HUBSPOT-SETUP.md.
+ *
+ *    A mismatch here does not throw: the contact is still created and the
+ *    dropdown is simply left empty or holds an off-list value. Verify with
+ *    one live test submit and check the contact record before sharing the
+ *    page. This is the single most likely thing to be quietly wrong.
  *
  * 3. Paste the new form's GUID into FORM_ID below.
  *
@@ -42,9 +51,8 @@
 
   var PORTAL_ID = "246160635";
 
-  // TODO: replace with the "Clinician Letter of Intent" form GUID.
-  // Falls back to the existing signup form so the page never silently fails.
-  var FORM_ID = "ed3a0cae-38ca-423f-b713-a94b5fc4c8eb";
+  // "Clinician Letter of Intent" form (portal 246160635).
+  var FORM_ID = "51373f27-6442-4409-9ca4-86ef0affc951";
 
   var ENDPOINT =
     "https://api-na2.hsforms.com/submissions/v3/integration/submit/" +
