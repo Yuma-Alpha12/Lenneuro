@@ -1,4 +1,4 @@
-/* Lenneuro — Clinician Letter of Intent form handler.
+/* Lenneuro: Clinician Letter of Intent form handler.
  *
  * Powers the inline form on /clinicians (clinicians/index.html).
  * Submits directly to the HubSpot Forms v3 submission API, same portal
@@ -349,7 +349,7 @@
     if (!f || f.id !== "ln-loi-form") return;
     e.preventDefault();
 
-    // honeypot — bots fill hidden inputs
+    // honeypot: bots fill hidden inputs
     var hp = f.elements["ln_hp"];
     if (hp && hp.value) { showSuccess(); return; }
 
@@ -365,7 +365,7 @@
       .catch(function () {
         setBusy(false);
         showError(
-          "Network error — your letter wasn't submitted. Please check your " +
+          "Network error. Your letter wasn't submitted. Please check your " +
           "connection and try again, or email info@lenneuro.com."
         );
       });
