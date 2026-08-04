@@ -63,6 +63,27 @@
   // exhausts the retries and surfaces a generic error instead of recovering.
   var MAX_RETRIES = 24;
 
+  // ---- HubSpot internal property names ------------------------------------
+  // HubSpot generated these from the property LABELS when the properties were
+  // created: "LOI: Monthly catheter volume" -> loi_monthly_catheter_volume
+  // (lowercased, colon dropped, spaces to underscores).
+  //
+  // The first four are confirmed by HubSpot's own REQUIRED_FIELD errors. The
+  // rest follow the same rule from their labels. If any of them are wrong,
+  // a test submit logs "[Lenneuro LOI] ... rejected these fields" naming the
+  // offenders, and this map is the only place to correct them.
+  var F = {
+    credentials: "loi_credentials",                    // LOI: Credentials
+    specialty: "loi_specialty",                        // LOI: Specialty
+    careSetting: "loi_care_setting",                   // LOI: Care setting
+    volume: "loi_monthly_catheter_volume",             // LOI: Monthly catheter volume
+    comments: "loi_clinician_comments",                // LOI: Clinician comments
+    signature: "loi_typed_signature",                  // LOI: Typed signature
+    signedDate: "loi_date_signed",                     // LOI: Date signed
+    citationConsent: "loi_consent_to_cite",            // LOI: Consent to cite
+    updatesOptIn: "loi_wants_updates"                  // LOI: Wants updates
+  };
+
   // Fields that must survive for the submission to be worth anything. If
   // HubSpot rejects one of these there is a real configuration problem.
   var CORE = ["firstname", "lastname", "email"];
@@ -229,6 +250,8 @@
 
   // ---- submission --------------------------------------------------------
 
+  // Left side is the HubSpot property name (from F). Right side reads the
+  // form input, whose DOM name is a separate, page-local thing.
   function buildFields() {
     return [
       { name: "firstname", value: val("firstname") },
@@ -238,15 +261,15 @@
       { name: "company", value: val("company") },
       { name: "jobtitle", value: val("jobtitle") },
       { name: "lead_type", value: "Clinicians" },
-      { name: "ln_credentials", value: val("ln_credentials") },
-      { name: "ln_specialty", value: val("ln_specialty") },
-      { name: "ln_care_setting", value: val("ln_care_setting") },
-      { name: "ln_catheter_volume_monthly", value: val("ln_catheter_volume_monthly") },
-      { name: "ln_loi_comments", value: val("ln_loi_comments") },
-      { name: "ln_loi_signature_name", value: val("ln_loi_signature_name") },
-      { name: "ln_loi_signed_date", value: todayISO() },
-      { name: "ln_loi_citation_consent", value: checked("ln_loi_citation_consent") ? "true" : "false" },
-      { name: "ln_loi_updates_opt_in", value: checked("ln_loi_updates_opt_in") ? "true" : "false" }
+      { name: F.credentials, value: val("ln_credentials") },
+      { name: F.specialty, value: val("ln_specialty") },
+      { name: F.careSetting, value: val("ln_care_setting") },
+      { name: F.volume, value: val("ln_catheter_volume_monthly") },
+      { name: F.comments, value: val("ln_loi_comments") },
+      { name: F.signature, value: val("ln_loi_signature_name") },
+      { name: F.signedDate, value: todayISO() },
+      { name: F.citationConsent, value: checked("ln_loi_citation_consent") ? "true" : "false" },
+      { name: F.updatesOptIn, value: checked("ln_loi_updates_opt_in") ? "true" : "false" }
     ].filter(function (f) { return f.value !== ""; });
   }
 
@@ -310,8 +333,17 @@
 
       // Always log the raw exchange. This is the only way to diagnose a
       // HubSpot-side misconfiguration from a browser.
+      var errs = (res.data && res.data.errors) || [];
+      var hint = "";
+      if (errs.some(function (e) { return (e.errorType || "") === "REQUIRED_FIELD"; })) {
+        hint = "\nHINT: a field is marked Required on the HubSpot form but was " +
+          "not in this payload. Either the property name in the F map at the " +
+          "top of this file does not match HubSpot's internal name, or an " +
+          "optional field (phone, comments) is marked Required on the form " +
+          "and was left blank.";
+      }
       console.error(
-        "[Lenneuro LOI] HubSpot rejected the submission.\n" +
+        "[Lenneuro LOI] HubSpot rejected the submission." + hint + "\n" +
         "status: " + res.status + "\n" +
         "response: " + JSON.stringify(res.data, null, 2) + "\n" +
         "sent: " + JSON.stringify(fields, null, 2)
