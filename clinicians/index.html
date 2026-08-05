@@ -140,7 +140,6 @@
   .ln-intro { background: #fff; }
   .ln-intro-copy { max-width: 780px; }
   .ln-intro-copy .ln-sub { max-width: 760px; }
-  .ln-intro-copy .ln-sub + .ln-sub { margin-top: 16px; }
   .ln-context-grid {
     display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 18px; margin-top: 38px;
@@ -159,6 +158,14 @@
     font-weight: 800; letter-spacing: -.3px;
   }
   .ln-context-card p { margin: 0; color: #5A6B73; font-size: 15.5px; line-height: 1.62; }
+  .ln-objectives-head { max-width: 720px; margin-top: 44px; }
+  .ln-objectives-head h3 {
+    margin: 0 0 10px; color: #14384A; font-size: clamp(23px, 2.6vw, 31px);
+    font-weight: 800; letter-spacing: -.6px; line-height: 1.18;
+  }
+  .ln-objectives-head p { margin: 0; color: #5A6B73; font-size: 15.5px; line-height: 1.62; }
+  .ln-objective-cards { margin-top: 24px; }
+  .ln-objective-cards .ln-card { background: #F4F8FA; }
   .ln-model-card {
     margin: 44px 0 0; overflow: hidden; background: #0E2A37;
     border: 1px solid rgba(20,56,74,.12); border-radius: 18px;
@@ -175,18 +182,6 @@
     flex: 0 0 auto; color: #17D0B0; font-weight: 700; text-decoration: none;
   }
   .ln-model-link:hover { text-decoration: underline; text-underline-offset: 3px; }
-
-  /* ---------------- device recap ---------------- */
-  .ln-recap { background: #fff; }
-  .ln-recap-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 40px; }
-  .ln-recap-item {
-    background: #F4F8FA; border: 1px solid rgba(20,56,74,.08); border-left: 3px solid #17D0B0;
-    border-radius: 12px; padding: 22px 24px;
-  }
-  .ln-recap-item:nth-child(2) { border-left-color: #E0A12F; }
-  .ln-recap-item:nth-child(3) { border-left-color: #0AAEE8; }
-  .ln-recap-item h4 { margin: 0 0 6px; font-size: 17px; font-weight: 800; color: #14384A; letter-spacing: -.2px; }
-  .ln-recap-item p { margin: 0; font-size: 14.5px; color: #5A6B73; line-height: 1.55; }
 
   /* ---------------- form ---------------- */
   .ln-form-section { padding: 92px 40px 100px; background: #EDF3F6; }
@@ -313,7 +308,6 @@
   @media (max-width: 900px) {
     .ln-cards { grid-template-columns: 1fr; }
     .ln-context-grid { grid-template-columns: 1fr; }
-    .ln-recap-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 820px) {
     .ln-nav-links, .ln-cta-btn { display: none !important; }
@@ -379,7 +373,6 @@
       <div class="ln-eyebrow-solid">About SnapCath™</div>
       <h2 class="ln-h2" id="ln-about-snapcath">An integrated catheter securement and sterile dressing system in development</h2>
       <p class="ln-sub">SnapCath™ is an external catheter accessory under development by Lenneuro. It is being designed for catheter-site care performed by healthcare professionals who manage vascular access lines.</p>
-      <p class="ln-sub">Current catheter-site care includes two related functions: securing the catheter and covering the insertion site with a sterile dressing. SnapCath™ is being developed to bring those functions together in a single integrated system.</p>
     </div>
 
     <div class="ln-context-grid">
@@ -391,8 +384,27 @@
       <article class="ln-context-card">
         <span class="ln-context-label">SnapCath™ concept in development</span>
         <h3>Two functions within one system</h3>
-        <p>SnapCath™ is being designed to place external catheter securement and a sterile dressing within one integrated system. The prototype shown below is not the final product, and its design objectives remain under evaluation.</p>
+        <p>SnapCath™ is being designed to place external catheter securement and a sterile dressing within one integrated system.</p>
       </article>
+    </div>
+
+    <div class="ln-objectives-head">
+      <h3>Other elements of the current prototype</h3>
+      <p>These design features and objectives are being evaluated during development.</p>
+    </div>
+    <div class="ln-cards ln-objective-cards">
+      <div class="ln-card">
+        <h3>Designed with skin in mind</h3>
+        <p>A design goal of the device is to limit adhesive contact with the skin during wear.</p>
+      </div>
+      <div class="ln-card">
+        <h3>Site access by design</h3>
+        <p>Features an openable lid intended to allow routine site access without removing the adhesive.</p>
+      </div>
+      <div class="ln-card">
+        <h3>Designed to be water resistant</h3>
+        <p>Water resistance for everyday wear is one of the current design objectives.</p>
+      </div>
     </div>
 
     <figure class="ln-model-card">
@@ -411,6 +423,7 @@
         <a class="ln-model-link" href="../uploads/snapcath-3d-model-30cc35f5.html" target="_blank" rel="noopener noreferrer nofollow">Open the 3D model in a new tab ↗</a>
       </figcaption>
     </figure>
+    <p class="ln-disclaimer" style="margin:32px 0 0;max-width:820px;">SnapCath™ is currently under development. It has not been cleared or approved by the U.S. Food and Drug Administration and is not available for sale or commercial distribution. Product images and models show design prototypes; final product appearance and specifications may differ. Nothing on this page is an offer to sell or a promotion of an unapproved device.</p>
   </div>
 </section>
 
@@ -436,36 +449,6 @@
         <p>No cost, no purchase obligation, no requirement to participate in any future study, and no exclusivity. Roughly three minutes of your time, and you can withdraw the letter at any point by emailing us.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ================= DEVICE RECAP ================= -->
-<section class="ln-section ln-recap">
-  <div class="ln-wrap">
-    <div style="max-width:720px;">
-      <div class="ln-eyebrow-solid">In development</div>
-      <h2 class="ln-h2">What SnapCath™ is designed to do</h2>
-      <p class="ln-sub">SnapCath™ is an external catheter securement accessory intended to support catheter securement and site coverage in a single device. These are its design objectives, currently being evaluated in development.</p>
-    </div>
-    <div class="ln-recap-grid">
-      <div class="ln-recap-item">
-        <h4>An integrated design</h4>
-        <p>Designed to support catheter securement and site coverage in a single accessory.</p>
-      </div>
-      <div class="ln-recap-item">
-        <h4>Designed with skin in mind</h4>
-        <p>A design goal of the device is to limit adhesive contact with the skin during wear.</p>
-      </div>
-      <div class="ln-recap-item">
-        <h4>Site access by design</h4>
-        <p>Features an openable lid intended to allow routine site access without removing the adhesive.</p>
-      </div>
-      <div class="ln-recap-item">
-        <h4>Designed to be water resistant</h4>
-        <p>Water resistance for everyday wear is a design objective and is being evaluated in development.</p>
-      </div>
-    </div>
-    <p class="ln-disclaimer" style="margin:32px 0 0;max-width:820px;">SnapCath™ is currently under development. It has not been cleared or approved by the U.S. Food and Drug Administration and is not available for sale or commercial distribution. Product images and models show design prototypes; final product appearance and specifications may differ. Nothing on this page is an offer to sell or a promotion of an unapproved device.</p>
   </div>
 </section>
 
