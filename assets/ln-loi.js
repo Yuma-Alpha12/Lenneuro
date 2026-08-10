@@ -1,50 +1,34 @@
-/* Lenneuro: Clinician Letter of Intent form handler.
+/* Lenneuro: Clinician outreach form handler.
  *
  * Powers the inline form on /clinicians (clinicians/index.html).
  * Submits directly to the HubSpot Forms v3 submission API, same portal
  * as assets/ln-signup.js.
  *
  * ---------------------------------------------------------------------------
- * SETUP (do this once in HubSpot, portal 246160635):
+ * HISTORY: this page used to collect a self-serve virtual letter of intent
+ * (credentials, specialty, care setting, monthly volume, a typed signature,
+ * and two affirmation checkboxes). That was removed. Clinicians are not the
+ * decision makers, most do not know what an LOI is, and every institution
+ * runs its own review process. The page now hands off to the clinical
+ * education team instead of capturing a signature.
  *
- * 1. Create a new form named "Clinician Letter of Intent".
- * 2. Add these fields to it (contact properties). Create any that don't exist:
+ * The file name and the HubSpot form GUID were kept so existing links and the
+ * HubSpot form's submission history stay intact.
  *
- *      firstname                    (default)  single-line text
- *      lastname                     (default)  single-line text
- *      email                        (default)  single-line text
- *      phone                        (default)  single-line text
- *      company                      (default)  single-line text  -> institution
- *      jobtitle                     (default)  single-line text
- *      lead_type                    (existing) dropdown          -> "Clinicians"
- *      ln_credentials               (new)      single-line text
- *      ln_specialty                 (new)      dropdown
- *      ln_care_setting              (new)      dropdown
- *      ln_catheter_volume_monthly   (new)      dropdown
- *      ln_loi_comments              (new)      multi-line text
- *      ln_loi_signature_name        (new)      single-line text
- *      ln_loi_signed_date           (new)      date picker
- *      ln_loi_citation_consent      (new)      single checkbox
- *      ln_loi_updates_opt_in        (new)      single checkbox
+ * ---------------------------------------------------------------------------
+ * HUBSPOT CHECK BEFORE THIS GOES LIVE (portal 246160635):
  *
- *    IMPORTANT for the three dropdowns: HubSpot matches on the option's
- *    internal value. When you create an option by typing only a label,
- *    HubSpot sets the internal value equal to that label. So this page
- *    sends the label text verbatim, e.g. "Critical care / ICU", and the
- *    HubSpot option labels must read EXACTLY the same, punctuation and
- *    spacing included. The full list is in HUBSPOT-SETUP.md.
+ * The "Clinician Letter of Intent" form still has the old LOI properties on
+ * it. If any of them are marked REQUIRED on the form, every submission from
+ * this page will fail with REQUIRED_FIELD, because this page no longer sends
+ * them. Open the form and confirm that only these are required:
  *
- *    A mismatch here does not throw: the contact is still created and the
- *    dropdown is simply left empty or holds an off-list value. Verify with
- *    one live test submit and check the contact record before sharing the
- *    page. This is the single most likely thing to be quietly wrong.
+ *      firstname   lastname   email   company
  *
- * 3. Paste the new form's GUID into FORM_ID below.
- *
- * Until step 3 is done the script still works: HubSpot rejects unknown fields
- * with FIELD_NOT_IN_FORM_DEFINITION, and this script automatically retries
- * without the rejected fields so the contact is never lost. It logs a warning
- * to the console listing what was dropped.
+ * jobtitle is optional here. lead_type is sent as "Clinicians".
+ * The old loi_* properties can be left on the contact record; they simply
+ * stop being populated. Run one live test submit and check the contact
+ * record before this page is shared.
  * ------------------------------------------------------------------------- */
 (function () {
   "use strict";
@@ -58,40 +42,17 @@
     "https://api-na2.hsforms.com/submissions/v3/integration/submit/" +
     PORTAL_ID + "/" + FORM_ID;
 
-  // Enough to shed every optional field one at a time. HubSpot sometimes
-  // reports only the first offending field per response, so a low cap here
-  // exhausts the retries and surfaces a generic error instead of recovering.
-  var MAX_RETRIES = 24;
-
-  // ---- HubSpot internal property names ------------------------------------
-  // HubSpot generated these from the property LABELS when the properties were
-  // created: "LOI: Monthly catheter volume" -> loi_monthly_catheter_volume
-  // (lowercased, colon dropped, spaces to underscores).
-  //
-  // The first four are confirmed by HubSpot's own REQUIRED_FIELD errors. The
-  // rest follow the same rule from their labels. If any of them are wrong,
-  // a test submit logs "[Lenneuro LOI] ... rejected these fields" naming the
-  // offenders, and this map is the only place to correct them.
-  var F = {
-    credentials: "loi_credentials",                    // LOI: Credentials
-    specialty: "loi_specialty",                        // LOI: Specialty
-    careSetting: "loi_care_setting",                   // LOI: Care setting
-    volume: "loi_monthly_catheter_volume",             // LOI: Monthly catheter volume
-    comments: "loi_clinician_comments",                // LOI: Clinician comments
-    signature: "loi_typed_signature",                  // LOI: Typed signature
-    signedDate: "loi_date_signed",                     // LOI: Date signed
-    citationConsent: "loi_consent_to_cite",            // LOI: Consent to cite
-    updatesOptIn: "loi_wants_updates"                  // LOI: Wants updates
-  };
+  // Enough to shed every optional field one at a time.
+  var MAX_RETRIES = 8;
 
   // Fields that must survive for the submission to be worth anything. If
   // HubSpot rejects one of these there is a real configuration problem.
   var CORE = ["firstname", "lastname", "email"];
 
   // Setup aid: append HubSpot's own error text to the on-screen message so a
-  // failure can be diagnosed from a screenshot. Flip to false before this
-  // page is shared with clinicians.
-  var SHOW_RAW_ERRORS = true;
+  // failure can be diagnosed from a screenshot. Off now that the page is
+  // being shared with clinicians. Full detail still goes to the console.
+  var SHOW_RAW_ERRORS = false;
 
   // ---- helpers -----------------------------------------------------------
 
@@ -107,29 +68,11 @@
     return (el.value || "").trim();
   }
 
-  function checked(name) {
-    var f = form();
-    if (!f) return false;
-    var el = f.elements[name];
-    return !!(el && el.checked);
-  }
-
   function getCookie(name) {
     var m = document.cookie.match(
       new RegExp("(^|;\\s*)" + name + "=([^;]*)")
     );
     return m ? decodeURIComponent(m[2]) : null;
-  }
-
-  function todayISO() {
-    var d = new Date();
-    var m = String(d.getMonth() + 1);
-    var day = String(d.getDate());
-    return (
-      d.getFullYear() + "-" +
-      (m.length < 2 ? "0" + m : m) + "-" +
-      (day.length < 2 ? "0" + day : day)
-    );
   }
 
   function markInvalid(el, bad) {
@@ -161,20 +104,15 @@
   var REQUIRED_TEXT = [
     ["firstname", "first name"],
     ["lastname", "last name"],
-    ["ln_credentials", "credentials"],
-    ["email", "email address"],
-    ["company", "institution or practice"],
-    ["jobtitle", "role or title"],
-    ["ln_specialty", "specialty"],
-    ["ln_care_setting", "care setting"],
-    ["ln_catheter_volume_monthly", "approximate monthly volume"],
-    ["ln_loi_signature_name", "signature"]
+    ["email", "work email"],
+    ["company", "hospital or institution"]
   ];
 
   function validate() {
     var f = form();
     var missing = [];
     var firstBad = null;
+    var emailMalformed = false;
 
     REQUIRED_TEXT.forEach(function (pair) {
       var name = pair[0];
@@ -183,26 +121,20 @@
       var bad = !v;
       if (name === "email" && v) {
         bad = !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v);
+        if (bad) emailMalformed = true;
       }
       markInvalid(el, bad);
       if (bad) {
-        missing.push(pair[1]);
+        if (!(name === "email" && emailMalformed)) missing.push(pair[1]);
         if (!firstBad) firstBad = el;
       }
     });
 
-    // Signature must plausibly match the name given above.
-    var sig = val("ln_loi_signature_name").toLowerCase().replace(/[^a-z]/g, "");
-    var last = val("lastname").toLowerCase().replace(/[^a-z]/g, "");
-    var sigMismatch = sig && last && sig.indexOf(last) === -1;
-
-    // Required affirmations
-    var affirmEl = f.elements["ln_loi_affirm"];
-    var consentEl = f.elements["ln_loi_citation_consent"];
-    var affirmBad = !checked("ln_loi_affirm");
-    var consentBad = !checked("ln_loi_citation_consent");
-    toggleCheckboxError(affirmEl, affirmBad);
-    toggleCheckboxError(consentEl, consentBad);
+    if (emailMalformed && !missing.length) {
+      showError("That email address doesn't look right. Please check it and try again.");
+      focus(f.elements["email"]);
+      return false;
+    }
 
     if (missing.length) {
       showError(
@@ -212,32 +144,9 @@
       focus(firstBad);
       return false;
     }
-    if (affirmBad || consentBad) {
-      showError(
-        "Please check the box" + (affirmBad && consentBad ? "es" : "") +
-        " confirming the statement above before signing."
-      );
-      focus(affirmBad ? affirmEl : consentEl);
-      return false;
-    }
-    if (sigMismatch) {
-      showError(
-        "Your typed signature doesn't match the name you entered above. " +
-        "Please type your full name exactly as it should appear on the letter."
-      );
-      markInvalid(f.elements["ln_loi_signature_name"], true);
-      focus(f.elements["ln_loi_signature_name"]);
-      return false;
-    }
 
     hideError();
     return true;
-  }
-
-  function toggleCheckboxError(el, bad) {
-    if (!el) return;
-    var row = el.closest ? el.closest(".ln-check-row") : null;
-    if (row && row.classList) row.classList.toggle("ln-invalid-row", !!bad);
   }
 
   function focus(el) {
@@ -250,31 +159,19 @@
 
   // ---- submission --------------------------------------------------------
 
-  // Left side is the HubSpot property name (from F). Right side reads the
-  // form input, whose DOM name is a separate, page-local thing.
   function buildFields() {
     return [
       { name: "firstname", value: val("firstname") },
       { name: "lastname", value: val("lastname") },
       { name: "email", value: val("email") },
-      { name: "phone", value: val("phone") },
       { name: "company", value: val("company") },
       { name: "jobtitle", value: val("jobtitle") },
-      { name: "lead_type", value: "Clinicians" },
-      { name: F.credentials, value: val("ln_credentials") },
-      { name: F.specialty, value: val("ln_specialty") },
-      { name: F.careSetting, value: val("ln_care_setting") },
-      { name: F.volume, value: val("ln_catheter_volume_monthly") },
-      { name: F.comments, value: val("ln_loi_comments") },
-      { name: F.signature, value: val("ln_loi_signature_name") },
-      { name: F.signedDate, value: todayISO() },
-      { name: F.citationConsent, value: checked("ln_loi_citation_consent") ? "true" : "false" },
-      { name: F.updatesOptIn, value: checked("ln_loi_updates_opt_in") ? "true" : "false" }
+      { name: "lead_type", value: "Clinicians" }
     ].filter(function (f) { return f.value !== ""; });
   }
 
   // Pull field names out of HubSpot's FIELD_NOT_IN_FORM_DEFINITION messages,
-  // e.g.  Error in 'fields.ln_specialty'. ... "ln_specialty" ...
+  // e.g.  Error in 'fields.lead_type'. ... "lead_type" ...
   function rejectedFieldNames(data) {
     var names = [];
     var errors = (data && data.errors) || [];
@@ -322,10 +219,10 @@
       if (res.ok) {
         if (dropped.length) {
           console.warn(
-            "[Lenneuro LOI] Submitted, but HubSpot rejected these fields " +
-            "because they are not on the form: " + dropped.join(", ") +
-            ". Add them to the Clinician Letter of Intent form (and set " +
-            "FORM_ID in assets/ln-loi.js) so this data is captured."
+            "[Lenneuro clinicians] Submitted, but HubSpot rejected these " +
+            "fields because they are not on the form: " + dropped.join(", ") +
+            ". Add them to the form (portal " + PORTAL_ID + ", form " +
+            FORM_ID + ") so this data is captured."
           );
         }
         return { ok: true, dropped: dropped };
@@ -336,14 +233,14 @@
       var errs = (res.data && res.data.errors) || [];
       var hint = "";
       if (errs.some(function (e) { return (e.errorType || "") === "REQUIRED_FIELD"; })) {
-        hint = "\nHINT: a field is marked Required on the HubSpot form but was " +
-          "not in this payload. Either the property name in the F map at the " +
-          "top of this file does not match HubSpot's internal name, or an " +
-          "optional field (phone, comments) is marked Required on the form " +
-          "and was left blank.";
+        hint = "\nHINT: a field is marked Required on the HubSpot form but " +
+          "was not in this payload. The old LOI properties (loi_credentials, " +
+          "loi_specialty, loi_care_setting, loi_monthly_catheter_volume, " +
+          "loi_typed_signature, loi_date_signed, loi_consent_to_cite) are no " +
+          "longer collected on this page. Un-require them on the form.";
       }
       console.error(
-        "[Lenneuro LOI] HubSpot rejected the submission." + hint + "\n" +
+        "[Lenneuro clinicians] HubSpot rejected the submission." + hint + "\n" +
         "status: " + res.status + "\n" +
         "response: " + JSON.stringify(res.data, null, 2) + "\n" +
         "sent: " + JSON.stringify(fields, null, 2)
@@ -371,9 +268,9 @@
         return post(minimal).then(function (r2) {
           if (r2.ok) {
             console.error(
-              "[Lenneuro LOI] Only name and email were saved. Everything " +
-              "else was rejected by HubSpot. Fix the form before sharing " +
-              "this page. See the response logged above."
+              "[Lenneuro clinicians] Only name and email were saved. " +
+              "Everything else was rejected by HubSpot. Fix the form. " +
+              "See the response logged above."
             );
             return { ok: true, dropped: ["everything except name and email"] };
           }
@@ -396,11 +293,8 @@
       }
     }
     var base = "Something went wrong on our end. Please try again, or email " +
-      "info@lenneuro.com and we'll record your letter manually.";
+      "info@lenneuro.com and we'll reach out directly.";
 
-    // While the page is unlisted and being set up, surface HubSpot's own
-    // reason on screen too. Diagnosing this from a screenshot is otherwise
-    // impossible. Set SHOW_RAW_ERRORS to false once it is live.
     if (SHOW_RAW_ERRORS && errors.length) {
       var raw = errors.map(function (e) {
         return (e.errorType || "?") + ": " + (e.message || "");
@@ -419,9 +313,9 @@
     btn.disabled = !!busy;
     if (busy) {
       btn.dataset.label = btn.textContent;
-      btn.innerHTML = '<span class="ln-spin"></span> Submitting…';
+      btn.innerHTML = '<span class="ln-spin"></span> Sending…';
     } else {
-      btn.innerHTML = btn.dataset.label || "Sign and submit";
+      btn.innerHTML = btn.dataset.label || "Ask our team to reach out";
     }
   }
 
@@ -463,7 +357,7 @@
       .catch(function () {
         setBusy(false);
         showError(
-          "Network error. Your letter wasn't submitted. Please check your " +
+          "Network error. Your request wasn't sent. Please check your " +
           "connection and try again, or email info@lenneuro.com."
         );
       });
@@ -478,25 +372,4 @@
     if (!t || !t.classList) return;
     if (t.classList.contains("ln-invalid")) t.classList.remove("ln-invalid");
   });
-  document.addEventListener("change", function (e) {
-    var t = e.target;
-    if (!t || t.type !== "checkbox") return;
-    if (t.checked) toggleCheckboxError(t, false);
-  });
-
-  // Stamp today's date into the signature block.
-  function stampDate() {
-    var el = document.getElementById("ln-loi-date");
-    if (!el) return;
-    var d = new Date();
-    el.textContent = d.toLocaleDateString("en-US", {
-      year: "numeric", month: "long", day: "numeric"
-    });
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", stampDate);
-  } else {
-    stampDate();
-  }
 })();
