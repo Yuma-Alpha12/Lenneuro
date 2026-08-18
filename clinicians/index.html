@@ -518,6 +518,11 @@ details.ln-q .ln-a strong { color: #14384A; }
 .ln-hamburger { display: flex !important; }
 .ln-header { padding: 14px 18px; }
 }
+@media (min-width: 961px) {
+.ln-header {
+padding-left: max(40px, calc((100vw - 1080px) / 2));
+}
+}
 @media (max-width: 900px) {
 .ln-cost-row { grid-template-columns: 1fr; }
 .ln-why { grid-template-columns: 1fr; }
