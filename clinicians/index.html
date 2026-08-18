@@ -4,410 +4,665 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SnapCath™ for Clinical Teams | Lenneuro</title>
-
 <!-- Unlisted page: keep it out of search engines and AI crawlers. -->
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, notranslate">
 <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
 <meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet">
 <meta name="referrer" content="no-referrer">
-
 <link rel="icon" type="image/png" href="../assets/favicon.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&amp;display=swap" rel="stylesheet">
-
 <style>
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0; background: #F4F8FA; color: #14384A;
-    font-family: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased; overflow-x: hidden;
-  }
-  ::selection { background: #17D0B0; color: #0E2A37; }
-  a { color: inherit; }
-  @keyframes lnPulse { 0%,100% { opacity: .35; } 50% { opacity: .9; } }
-  @keyframes lnSpin { to { transform: rotate(360deg); } }
 
-  /* ---------------- nav ---------------- */
-  .ln-header {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between; gap: 16px;
-    padding: 18px 30px; background: rgba(14,42,55,0.92);
-    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(23,208,176,0.16);
-  }
-  .ln-logo { display: flex; align-items: center; text-decoration: none; flex: 0 0 auto; }
-  .ln-logo span { display: inline-flex; }
-  .ln-logo img { height: 26px; width: auto; display: block; }
-  .ln-nav-links { display: flex; align-items: center; gap: 4px; flex: 1 1 auto; justify-content: center; }
-  .ln-nav-links a {
-    color: #C7D6DD; text-decoration: none; font-size: 14.5px; font-weight: 500;
-    letter-spacing: .1px; padding: 8px 11px; border-radius: 8px; white-space: nowrap;
-    transition: color .2s, background .2s;
-  }
-  .ln-nav-links a:hover { color: #fff; background: rgba(23,208,176,0.1); }
-  .ln-cta-btn {
-    flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px;
-    background: #17D0B0; color: #0E2A37; font-weight: 700; font-size: 14px;
-    letter-spacing: .2px; text-decoration: none; padding: 11px 20px; border-radius: 8px;
-    transition: transform .2s ease, box-shadow .2s ease;
-    box-shadow: 0 6px 18px -8px rgba(23,208,176,.6);
-  }
-  .ln-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -12px rgba(23,208,176,.8); }
-  .ln-hamburger {
-    display: none; flex-direction: column; justify-content: center; gap: 5px;
-    background: none; border: none; cursor: pointer; padding: 8px; flex: 0 0 auto;
-  }
-  .ln-hamburger span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; }
-  .ln-mobile-menu { display: none; }
-  .ln-mobile-menu.ln-open {
-    display: flex; flex-direction: column; position: fixed; top: 64px; left: 0; right: 0; bottom: 0;
-    background: #0E2A37; padding: 10px 24px; z-index: 99; overflow-y: auto;
-  }
-  .ln-mobile-menu a {
-    color: #fff; text-decoration: none; font-size: 16px; font-weight: 600;
-    padding: 12px 6px; border-bottom: 1px solid rgba(255,255,255,.08);
-  }
-  .ln-mobile-menu a:last-child { border-bottom: none; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+margin: 0; background: #F4F8FA; color: #14384A;
+font-family: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+-webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+::selection { background: #17D0B0; color: #0E2A37; }
+a { color: inherit; }
+@keyframes lnPulse { 0%,100% { opacity: .35; } 50% { opacity: .9; } }
+@keyframes lnSpin { to { transform: rotate(360deg); } }
+/* ---------------- nav ---------------- */
+.ln-header {
+position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+display: flex; align-items: center; justify-content: space-between; gap: 16px;
+padding: 18px 30px; background: rgba(14,42,55,0.92);
+backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+border-bottom: 1px solid rgba(23,208,176,0.16);
+}
+.ln-logo { display: flex; align-items: center; text-decoration: none; flex: 0 0 auto; }
+.ln-logo span { display: inline-flex; }
+.ln-logo img { height: 26px; width: auto; display: block; }
+.ln-nav-links { display: flex; align-items: center; gap: 4px; flex: 1 1 auto; justify-content: center; }
+.ln-nav-links a {
+color: #C7D6DD; text-decoration: none; font-size: 14.5px; font-weight: 500;
+letter-spacing: .1px; padding: 8px 11px; border-radius: 8px; white-space: nowrap;
+transition: color .2s, background .2s;
+}
+.ln-nav-links a:hover { color: #fff; background: rgba(23,208,176,0.1); }
+.ln-cta-btn {
+flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px;
+background: #17D0B0; color: #0E2A37; font-weight: 700; font-size: 14px;
+letter-spacing: .2px; text-decoration: none; padding: 11px 20px; border-radius: 8px;
+transition: transform .2s ease, box-shadow .2s ease;
+box-shadow: 0 6px 18px -8px rgba(23,208,176,.6);
+}
+.ln-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -12px rgba(23,208,176,.8); }
+.ln-hamburger {
+display: none; flex-direction: column; justify-content: center; gap: 5px;
+background: none; border: none; cursor: pointer; padding: 8px; flex: 0 0 auto;
+}
+.ln-hamburger span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; }
+.ln-mobile-menu { display: none; }
+.ln-mobile-menu.ln-open {
+display: flex; flex-direction: column; position: fixed; top: 64px; left: 0; right: 0; bottom: 0;
+background: #0E2A37; padding: 10px 24px; z-index: 99; overflow-y: auto;
+}
+.ln-mobile-menu a {
+color: #fff; text-decoration: none; font-size: 16px; font-weight: 600;
+padding: 12px 6px; border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.ln-mobile-menu a:last-child { border-bottom: none; }
+/* ---------------- shared ---------------- */
+.ln-eyebrow-solid {
+display: inline-flex; align-items: center; background: #17D0B0; color: #0E2A37;
+font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+padding: 7px 14px; border-radius: 5px; margin-bottom: 22px;
+}
+.ln-eyebrow-ink {
+display: inline-flex; align-items: center; background: #14384A; color: #fff;
+font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+padding: 7px 14px; border-radius: 5px; margin-bottom: 22px;
+}
+.ln-disclaimer { font-size: 12.5px; line-height: 1.6; color: #5A6B73; }
+/* ---------------- hero ---------------- */
+.ln-hero {
+position: relative; padding: 165px 40px 92px;
+background: radial-gradient(120% 120% at 85% 8%, #1B4A5F 0%, #14384A 42%, #0E2A37 100%);
+overflow: hidden;
+}
+.ln-hero-orb {
+position: absolute; top: -30%; right: -8%; width: 560px; height: 560px; border-radius: 50%;
+background: radial-gradient(circle, rgba(23,208,176,.14), transparent 62%);
+filter: blur(10px); animation: lnPulse 8s ease-in-out infinite; pointer-events: none;
+}
+.ln-hero-inner { position: relative; max-width: 880px; margin: 0 auto; }
+.ln-hero h1 {
+margin: 0 0 18px; font-size: clamp(34px, 4.6vw, 58px); font-weight: 800;
+letter-spacing: -1.4px; line-height: 1.05; color: #fff;
+}
+.ln-hero .ln-lede {
+margin: 0 0 22px; font-size: 18.5px; color: #AFC3CB; line-height: 1.6; max-width: 700px;
+}
+.ln-hero-note {
+margin: 0; font-size: 13px; line-height: 1.6; color: #8FA7B0; max-width: 700px;
+padding-top: 20px; border-top: 1px solid rgba(255,255,255,.1);
+}
+.ln-hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; margin-bottom: 30px; }
+.ln-hero-jump {
+display: inline-flex; align-items: center; gap: 9px; background: #17D0B0; color: #0E2A37;
+font-weight: 700; font-size: 15.5px; text-decoration: none; padding: 15px 26px;
+border-radius: 10px;
+transition: transform .2s ease, box-shadow .2s ease;
+box-shadow: 0 6px 18px -8px rgba(23,208,176,.6);
+}
+.ln-hero-jump:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -12px rgba(23,208,176,.8); }
+.ln-hero-ghost {
+display: inline-flex; align-items: center; gap: 8px; color: #CFE0E6; font-weight: 600;
+font-size: 15px; text-decoration: none; padding: 14px 20px; border-radius: 10px;
+border: 1px solid rgba(255,255,255,.22); transition: background .2s ease, border-color .2s ease;
+}
+.ln-hero-ghost:hover { background: rgba(255,255,255,.06); border-color: rgba(23,208,176,.5); }
+/* ---------------- sections ---------------- */
+.ln-section { padding: 92px 40px; }
+.ln-wrap { max-width: 1080px; margin: 0 auto; }
+.ln-h2 {
+margin: 0 0 16px; font-size: clamp(28px, 3.4vw, 42px); font-weight: 800;
+letter-spacing: -1px; line-height: 1.12; color: #14384A;
+}
+.ln-sub { margin: 0; font-size: 16.5px; color: #5A6B73; line-height: 1.65; max-width: 700px; }
+.ln-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 44px; }
+.ln-card {
+background: #fff; border: 1px solid rgba(20,56,74,.08); border-top: 3px solid #17D0B0;
+border-radius: 14px; padding: 28px 28px 30px;
+}
+.ln-card:nth-child(2) { border-top-color: #0AAEE8; }
+.ln-card:nth-child(3) { border-top-color: #E0A12F; }
+.ln-card h3 { margin: 0 0 9px; font-size: 19.5px; font-weight: 800; letter-spacing: -.3px; color: #14384A; }
+.ln-card p { margin: 0; font-size: 15.5px; color: #5A6B73; line-height: 1.58; }
+/* ---------------- value case ---------------- */
+.ln-value { background: #F4F8FA; }
+.ln-vac-grid {
+display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 44px;
+}
+.ln-vac-item {
+background: #fff; border: 1px solid rgba(20,56,74,.09);
+border-radius: 14px; padding: 26px 26px 28px; display: flex; flex-direction: column;
+}
+.ln-vac-tag {
+display: inline-flex; align-items: center; align-self: flex-start; gap: 7px;
+font-size: 10.5px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
+color: #12876F; background: rgba(23,208,176,.14); border-radius: 20px;
+padding: 5px 11px; margin-bottom: 14px;
+}
+.ln-vac-item:nth-child(2) .ln-vac-tag,
+.ln-vac-item:nth-child(5) .ln-vac-tag { color: #0B7BA6; background: rgba(10,174,232,.13); }
+.ln-vac-item:nth-child(3) .ln-vac-tag,
+.ln-vac-item:nth-child(6) .ln-vac-tag { color: #A8760F; background: rgba(224,161,47,.15); }
+.ln-vac-item h3 {
+margin: 0 0 9px; font-size: 18.5px; font-weight: 800; letter-spacing: -.3px;
+color: #14384A; line-height: 1.25;
+}
+.ln-vac-item p { margin: 0; font-size: 15px; color: #5A6B73; line-height: 1.6; }
+.ln-handoff {
+margin-top: 22px; border-radius: 18px; padding: 40px 42px 42px;
+background: radial-gradient(120% 140% at 88% 4%, #1B4A5F 0%, #14384A 46%, #0E2A37 100%);
+color: #fff;
+}
+.ln-handoff h3 {
+margin: 0 0 12px; font-size: clamp(22px, 2.6vw, 29px); font-weight: 800;
+letter-spacing: -.6px; line-height: 1.2; color: #fff;
+}
+.ln-handoff > p { margin: 0 0 22px; font-size: 16px; color: #B6C9D1; line-height: 1.68; max-width: 720px; }
+.ln-handoff-list { list-style: none; margin: 0 0 28px; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 28px; }
+.ln-handoff-list li {
+position: relative; padding-left: 26px; font-size: 15px; color: #CFE0E6; line-height: 1.55;
+}
+.ln-handoff-list li::before {
+content: ''; position: absolute; left: 4px; top: 8px; width: 8px; height: 8px;
+border-radius: 50%; background: #17D0B0;
+}
+.ln-handoff-cta {
+display: inline-flex; align-items: center; gap: 9px; background: #17D0B0; color: #0E2A37;
+font-weight: 700; font-size: 15.5px; text-decoration: none; padding: 15px 26px; border-radius: 10px;
+transition: transform .2s ease, box-shadow .2s ease;
+box-shadow: 0 6px 18px -8px rgba(23,208,176,.6);
+}
+.ln-handoff-cta:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -12px rgba(23,208,176,.8); }
+/* ---------------- what it is ---------------- */
+.ln-about { background: #fff; }
+.ln-help { background: #fff; }
+.ln-about-grid {
+display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px;
+align-items: start; margin-top: 8px;
+}
+.ln-about-body p { margin: 0 0 16px; font-size: 16.5px; color: #4C5F68; line-height: 1.68; }
+.ln-about-body p:last-child { margin-bottom: 0; }
+.ln-about-body strong { color: #14384A; font-weight: 700; }
+.ln-parts {
+list-style: none; margin: 4px 0 20px; padding: 0;
+display: flex; flex-direction: column; gap: 11px;
+}
+.ln-parts li {
+position: relative; padding-left: 30px; font-size: 16px; color: #4C5F68; line-height: 1.55;
+}
+.ln-parts li::before {
+content: ''; position: absolute; left: 8px; top: 9px; width: 8px; height: 8px;
+border-radius: 50%; background: #17D0B0;
+}
+.ln-parts li b { color: #14384A; font-weight: 700; }
+/* image slots */
+.ln-figs { display: flex; flex-direction: column; gap: 16px; }
+.ln-fig { margin: 0; }
+.ln-fig-box {
+position: relative; width: 100%; border-radius: 14px; overflow: hidden;
+background: #F4F8FA; border: 1px solid rgba(20,56,74,.1);
+}
+.ln-fig-box img { display: block; width: 100%; height: auto; }
+.ln-figs > .ln-fig:first-child .ln-fig-box img { max-height: 440px; object-fit: cover; object-position: center 30%; }
+.ln-fig-ph {
+display: none; align-items: center; justify-content: center; text-align: center;
+min-height: 210px; padding: 28px 22px; border: 1px dashed rgba(20,56,74,.28);
+border-radius: 14px; background: #F4F8FA; color: #5A6B73;
+font-size: 13.5px; line-height: 1.55;
+}
+.ln-fig.ln-missing .ln-fig-box { display: none; }
+.ln-fig.ln-missing .ln-fig-ph { display: flex; }
+.ln-fig figcaption { margin: 9px 2px 0; font-size: 12.5px; color: #5A6B73; line-height: 1.5; }
+.ln-fig-wide .ln-fig-box img { max-height: 420px; object-fit: cover; }
+.ln-fig-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
+/* today vs designed-to-do */
+.ln-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 52px; }
+.ln-col {
+border-radius: 16px; padding: 30px 30px 32px; border: 1px solid rgba(20,56,74,.1);
+}
+.ln-col-today { background: #F7FAFB; }
+.ln-col-design { background: #F1FBF9; border-color: rgba(23,208,176,.3); }
+.ln-col h3 {
+margin: 0 0 6px; font-size: 19px; font-weight: 800; color: #14384A; letter-spacing: -.3px;
+}
+.ln-col .ln-col-note {
+margin: 0 0 18px; font-size: 13px; color: #5A6B73; line-height: 1.5;
+}
+.ln-col ul { list-style: none; margin: 0; padding: 0; }
+.ln-col li {
+position: relative; padding-left: 24px; margin-bottom: 13px;
+font-size: 15.5px; color: #4C5F68; line-height: 1.58;
+}
+.ln-col li:last-child { margin-bottom: 0; }
+.ln-col li::before {
+content: ''; position: absolute; left: 6px; top: 8px; width: 7px; height: 7px;
+border-radius: 2px; background: #B6C4CA;
+}
+.ln-col-design li::before { background: #17D0B0; }
+.ln-model { margin-top: 52px; }
+.ln-model-frame {
+display: block; width: 100%; height: 560px; border: 0;
+}
+.ln-model-shell {
+border-radius: 18px; overflow: hidden; border: 1px solid rgba(20,56,74,.12);
+box-shadow: 0 30px 70px -40px rgba(14,56,74,.4); background: #0E2A37;
+}
+/* ---------------- form ---------------- */
+.ln-form-section { padding: 92px 40px 100px; background: #EDF3F6; }
+.ln-form-head { max-width: 720px; margin: 0 auto 38px; text-align: center; }
+.ln-form-head .ln-sub { margin-left: auto; margin-right: auto; }
+.ln-card-form {
+max-width: 660px; margin: 0 auto; background: #fff;
+border: 1px solid rgba(20,56,74,.09); border-radius: 20px;
+padding: 42px 44px 38px; box-shadow: 0 34px 80px -40px rgba(14,56,74,.35);
+}
+.ln-row { display: flex; gap: 16px; }
+.ln-row > .ln-field { flex: 1 1 0; min-width: 0; }
+.ln-field { margin-bottom: 18px; }
+.ln-label { display: block; font-size: 13px; font-weight: 700; color: #14384A; margin-bottom: 7px; }
+.ln-label span { color: #17D0B0; }
+.ln-label em { font-style: normal; font-weight: 500; font-size: 12.5px; color: #5A6B73; }
+.ln-input {
+width: 100%; background: #F7FAFB; border: 1px solid rgba(20,56,74,.16); border-radius: 9px;
+padding: 13px 15px; color: #14384A; font-size: 15px; font-family: inherit; outline: none;
+transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.ln-input::placeholder { color: #6A7D85; }
+.ln-input:focus {
+background: #fff; border-color: #17D0B0; box-shadow: 0 0 0 3px rgba(23,208,176,.18);
+}
+.ln-input.ln-invalid {
+border-color: #D96060; box-shadow: 0 0 0 3px rgba(217,96,96,.14);
+}
+.ln-submit {
+width: 100%; margin-top: 10px; background: #17D0B0; color: #0E2A37; font-weight: 700;
+font-size: 16px; border: none; border-radius: 10px; padding: 17px; cursor: pointer;
+font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+box-shadow: 0 8px 22px -10px rgba(23,208,176,.7);
+}
+.ln-submit:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -14px rgba(23,208,176,.85); }
+.ln-submit[disabled] { opacity: .65; cursor: default; transform: none; box-shadow: none; }
+.ln-spin {
+width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(14,42,55,.3);
+border-top-color: #0E2A37; animation: lnSpin .7s linear infinite;
+}
+.ln-form-error {
+display: none; margin: 16px 0 0; padding: 13px 16px; border-radius: 10px;
+background: rgba(217,96,96,.08); border: 1px solid rgba(217,96,96,.35);
+color: #A83E3E; font-size: 14px; line-height: 1.55;
+}
+.ln-form-note { margin: 16px 0 0; font-size: 12.5px; color: #5A6B73; line-height: 1.6; text-align: center; }
+.ln-form-note a { color: #14384A; }
+.ln-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+/* success */
+.ln-success { display: none; text-align: center; padding: 18px 4px 8px; }
+.ln-success .ln-check-mark {
+width: 62px; height: 62px; margin: 0 auto 20px; border-radius: 50%;
+background: rgba(23,208,176,.14); border: 1px solid rgba(23,208,176,.5); color: #12B79C;
+display: flex; align-items: center; justify-content: center; font-size: 30px;
+}
+.ln-success h3 { margin: 0 0 10px; font-size: 26px; font-weight: 800; letter-spacing: -.5px; color: #14384A; }
+.ln-success p { margin: 0 auto 14px; font-size: 15.5px; color: #5A6B73; line-height: 1.6; max-width: 480px; }
+.ln-success p:last-child { margin-bottom: 0; }
+/* footer */
+.ln-footer { background: #0A2029; border-top: 1px solid rgba(255,255,255,.06); padding: 60px 40px 34px; }
+.ln-footer p { margin: 0 0 22px; font-size: 12px; color: #6E858E; line-height: 1.6; max-width: 820px; }
+.ln-footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.ln-footer-bottom span { font-size: 13px; color: #6E858E; }
+/* ---------------- responsive ---------------- */
+@media (max-width: 1000px) {
+.ln-vac-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 900px) {
+.ln-cards { grid-template-columns: 1fr; }
+.ln-vac-grid { grid-template-columns: 1fr; }
+.ln-handoff-list { grid-template-columns: 1fr; }
+.ln-about-grid { grid-template-columns: 1fr; gap: 36px; }
+.ln-compare { grid-template-columns: 1fr; gap: 16px; }
+.ln-fig-row { grid-template-columns: 1fr; gap: 24px; }
+.ln-model-frame { height: 420px; }
+}
+@media (max-width: 820px) {
+.ln-col { padding: 24px 22px 26px; }
+.ln-model-frame { height: 360px; }
+.ln-nav-links, .ln-cta-btn { display: none !important; }
+.ln-hamburger { display: flex !important; }
+.ln-header { padding: 14px 18px; }
+.ln-hero { padding: 130px 20px 70px; }
+.ln-hero-actions { gap: 12px; }
+.ln-hero-jump, .ln-hero-ghost { width: 100%; justify-content: center; }
+.ln-section { padding: 64px 20px; }
+.ln-handoff { padding: 30px 24px 32px; border-radius: 16px; }
+.ln-handoff-cta { width: 100%; justify-content: center; }
+.ln-form-section { padding: 64px 18px 76px; }
+.ln-card-form { padding: 30px 22px 28px; border-radius: 16px; }
+.ln-row { flex-direction: column; gap: 0; }
+}
 
-  /* ---------------- shared ---------------- */
-  .ln-eyebrow-solid {
-    display: inline-flex; align-items: center; background: #17D0B0; color: #0E2A37;
-    font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
-    padding: 7px 14px; border-radius: 5px; margin-bottom: 22px;
-  }
-  .ln-eyebrow-ink {
-    display: inline-flex; align-items: center; background: #14384A; color: #fff;
-    font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
-    padding: 7px 14px; border-radius: 5px; margin-bottom: 22px;
-  }
-  .ln-disclaimer { font-size: 12.5px; line-height: 1.6; color: #8FA7B0; }
+/* ================= V2 ADDITIONS ================= */
 
-  /* ---------------- hero ---------------- */
-  .ln-hero {
-    position: relative; padding: 165px 40px 92px;
-    background: radial-gradient(120% 120% at 85% 8%, #1B4A5F 0%, #14384A 42%, #0E2A37 100%);
-    overflow: hidden;
-  }
-  .ln-hero-orb {
-    position: absolute; top: -30%; right: -8%; width: 560px; height: 560px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(23,208,176,.14), transparent 62%);
-    filter: blur(10px); animation: lnPulse 8s ease-in-out infinite; pointer-events: none;
-  }
-  .ln-hero-inner { position: relative; max-width: 880px; margin: 0 auto; }
-  .ln-hero h1 {
-    margin: 0 0 18px; font-size: clamp(34px, 4.6vw, 58px); font-weight: 800;
-    letter-spacing: -1.4px; line-height: 1.05; color: #fff;
-  }
-  .ln-hero .ln-lede {
-    margin: 0 0 22px; font-size: 18.5px; color: #AFC3CB; line-height: 1.6; max-width: 700px;
-  }
-  .ln-hero-note {
-    margin: 0; font-size: 13px; line-height: 1.6; color: #8FA7B0; max-width: 700px;
-    padding-top: 20px; border-top: 1px solid rgba(255,255,255,.1);
-  }
-  .ln-hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; margin-bottom: 30px; }
-  .ln-hero-jump {
-    display: inline-flex; align-items: center; gap: 9px; background: #17D0B0; color: #0E2A37;
-    font-weight: 700; font-size: 15.5px; text-decoration: none; padding: 15px 26px;
-    border-radius: 10px;
-    transition: transform .2s ease, box-shadow .2s ease;
-    box-shadow: 0 6px 18px -8px rgba(23,208,176,.6);
-  }
-  .ln-hero-jump:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -12px rgba(23,208,176,.8); }
-  .ln-hero-ghost {
-    display: inline-flex; align-items: center; gap: 8px; color: #CFE0E6; font-weight: 600;
-    font-size: 15px; text-decoration: none; padding: 14px 20px; border-radius: 10px;
-    border: 1px solid rgba(255,255,255,.22); transition: background .2s ease, border-color .2s ease;
-  }
-  .ln-hero-ghost:hover { background: rgba(255,255,255,.06); border-color: rgba(23,208,176,.5); }
+/* hero: split layout with product image */
+.ln-hero-split {
+position: relative; max-width: 1180px; margin: 0 auto;
+display: grid; grid-template-columns: 1.02fr .98fr; gap: 54px; align-items: center;
+}
+.ln-hero-copy { max-width: 620px; }
+.ln-hero-shot {
+position: relative; border-radius: 20px; overflow: hidden;
+border: 1px solid rgba(23,208,176,.28);
+box-shadow: 0 40px 90px -40px rgba(0,0,0,.75);
+background: #14384A; margin: 0;
+}
+.ln-hero-shot { min-height: 380px; background: linear-gradient(150deg, #1B4A5F, #0E2A37); }
+.ln-hero-shot img { display: block; width: 100%; height: 100%; min-height: 380px; max-height: 460px; object-fit: cover; object-position: center 34%; }
+.ln-hero-shot.ln-noimg img { display: none; }
+.ln-hero-shot.ln-noimg::before {
+content: 'Product image \A assets/hero-device.jpg'; white-space: pre; text-align: center;
+display: flex; align-items: center; justify-content: center; min-height: 380px;
+font-size: 13.5px; line-height: 1.7; color: #6E909E;
+}
+.ln-hero-shot figcaption {
+position: absolute; left: 0; right: 0; bottom: 0; padding: 26px 20px 13px;
+background: linear-gradient(to top, rgba(10,32,41,.92), rgba(10,32,41,0));
+font-size: 12px; color: #B6C9D1; line-height: 1.5;
+}
+.ln-hero .ln-lede { max-width: 620px; }
+.ln-hero-note { max-width: 620px; }
 
-  /* ---------------- sections ---------------- */
-  .ln-section { padding: 92px 40px; }
-  .ln-wrap { max-width: 1080px; margin: 0 auto; }
-  .ln-h2 {
-    margin: 0 0 16px; font-size: clamp(28px, 3.4vw, 42px); font-weight: 800;
-    letter-spacing: -1px; line-height: 1.12; color: #14384A;
-  }
-  .ln-sub { margin: 0; font-size: 16.5px; color: #5A6B73; line-height: 1.65; max-width: 700px; }
-  .ln-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 44px; }
-  .ln-card {
-    background: #fff; border: 1px solid rgba(20,56,74,.08); border-top: 3px solid #17D0B0;
-    border-radius: 14px; padding: 28px 28px 30px;
-  }
-  .ln-card:nth-child(2) { border-top-color: #0AAEE8; }
-  .ln-card:nth-child(3) { border-top-color: #E0A12F; }
-  .ln-card h3 { margin: 0 0 9px; font-size: 19.5px; font-weight: 800; letter-spacing: -.3px; color: #14384A; }
-  .ln-card p { margin: 0; font-size: 15.5px; color: #5A6B73; line-height: 1.58; }
+/* claim band directly under hero */
+.ln-band { background: #0A2029; padding: 0 40px 54px; }
+.ln-band-inner { max-width: 1180px; margin: 0 auto; }
+.ln-band-kicker {
+margin: 0 0 26px; padding-top: 46px; border-top: 1px solid rgba(255,255,255,.09);
+font-size: 17px; line-height: 1.62; color: #CFE0E6; max-width: 880px;
+}
+.ln-band-kicker b { color: #fff; font-weight: 700; }
+.ln-stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-radius: 16px; overflow: hidden; background: #12333F; }
+.ln-stat { padding: 26px 24px 24px; border-right: 1px solid rgba(255,255,255,.07); }
+.ln-stat:last-child { border-right: none; }
+.ln-stat-k { display: block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: #7FA3B0; margin-bottom: 12px; }
+.ln-stat-v { display: block; font-size: clamp(22px, 2.3vw, 30px); font-weight: 800; letter-spacing: -.8px; color: #17D0B0; line-height: 1.08; margin-bottom: 9px; }
+.ln-stat-v .ln-was { color: #7FA3B0; font-weight: 600; }
+.ln-stat-v .ln-arrow { color: #4E7482; font-weight: 500; padding: 0 4px; }
+.ln-stat:nth-child(2) .ln-stat-v { color: #3EC2F0; }
+.ln-stat:nth-child(3) .ln-stat-v { color: #EFB544; }
+.ln-stat:nth-child(4) .ln-stat-v { color: #17D0B0; font-size: clamp(19px, 1.9vw, 24px); }
+.ln-stat-d { display: block; font-size: 12.5px; color: #90A9B3; line-height: 1.5; }
+.ln-band-foot { margin: 18px 0 0; font-size: 12.5px; color: #6E858E; line-height: 1.6; max-width: 900px; }
 
-  /* ---------------- value case ---------------- */
-  .ln-value { background: #F4F8FA; }
-  .ln-vac-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 44px;
-  }
-  .ln-vac-item {
-    background: #fff; border: 1px solid rgba(20,56,74,.09);
-    border-radius: 14px; padding: 26px 26px 28px; display: flex; flex-direction: column;
-  }
-  .ln-vac-tag {
-    display: inline-flex; align-items: center; align-self: flex-start; gap: 7px;
-    font-size: 10.5px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
-    color: #12876F; background: rgba(23,208,176,.14); border-radius: 20px;
-    padding: 5px 11px; margin-bottom: 14px;
-  }
-  .ln-vac-item:nth-child(2) .ln-vac-tag,
-  .ln-vac-item:nth-child(5) .ln-vac-tag { color: #0B7BA6; background: rgba(10,174,232,.13); }
-  .ln-vac-item:nth-child(3) .ln-vac-tag,
-  .ln-vac-item:nth-child(6) .ln-vac-tag { color: #A8760F; background: rgba(224,161,47,.15); }
-  .ln-vac-item h3 {
-    margin: 0 0 9px; font-size: 18.5px; font-weight: 800; letter-spacing: -.3px;
-    color: #14384A; line-height: 1.25;
-  }
-  .ln-vac-item p { margin: 0; font-size: 15px; color: #5A6B73; line-height: 1.6; }
+/* problem section */
+.ln-problem { background: #fff; }
+.ln-cost-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 42px; }
+.ln-cost {
+background: #F7FAFB; border: 1px solid rgba(20,56,74,.1); border-left: 3px solid #E0A12F;
+border-radius: 12px; padding: 22px 22px 20px;
+}
+.ln-cost-v { display: block; font-size: 30px; font-weight: 800; letter-spacing: -1px; color: #14384A; line-height: 1; margin-bottom: 8px; }
+.ln-cost-l { display: block; font-size: 14.5px; font-weight: 700; color: #14384A; margin-bottom: 5px; }
+.ln-cost-s { display: block; font-size: 12.5px; color: #5A6B73; line-height: 1.5; }
+.ln-why { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
 
-  .ln-handoff {
-    margin-top: 22px; border-radius: 18px; padding: 40px 42px 42px;
-    background: radial-gradient(120% 140% at 88% 4%, #1B4A5F 0%, #14384A 46%, #0E2A37 100%);
-    color: #fff;
-  }
-  .ln-handoff h3 {
-    margin: 0 0 12px; font-size: clamp(22px, 2.6vw, 29px); font-weight: 800;
-    letter-spacing: -.6px; line-height: 1.2; color: #fff;
-  }
-  .ln-handoff > p { margin: 0 0 22px; font-size: 16px; color: #B6C9D1; line-height: 1.68; max-width: 720px; }
-  .ln-handoff-list { list-style: none; margin: 0 0 28px; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 28px; }
-  .ln-handoff-list li {
-    position: relative; padding-left: 26px; font-size: 15px; color: #CFE0E6; line-height: 1.55;
-  }
-  .ln-handoff-list li::before {
-    content: ''; position: absolute; left: 4px; top: 8px; width: 8px; height: 8px;
-    border-radius: 50%; background: #17D0B0;
-  }
-  .ln-handoff-cta {
-    display: inline-flex; align-items: center; gap: 9px; background: #17D0B0; color: #0E2A37;
-    font-weight: 700; font-size: 15.5px; text-decoration: none; padding: 15px 26px; border-radius: 10px;
-    transition: transform .2s ease, box-shadow .2s ease;
-    box-shadow: 0 6px 18px -8px rgba(23,208,176,.6);
-  }
-  .ln-handoff-cta:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -12px rgba(23,208,176,.8); }
+/* comparison table */
+.ln-matrix { background: #F4F8FA; }
+.ln-table-scroll { margin-top: 44px; overflow-x: auto; border-radius: 16px; border: 1px solid rgba(20,56,74,.12); background: #fff; }
+table.ln-matrix-t { width: 100%; min-width: 860px; border-collapse: collapse; font-size: 14.5px; }
+table.ln-matrix-t th, table.ln-matrix-t td { padding: 14px 16px; text-align: center; border-bottom: 1px solid rgba(20,56,74,.08); }
+table.ln-matrix-t thead th { font-size: 13px; font-weight: 700; color: #14384A; vertical-align: bottom; }
+table.ln-matrix-t thead th small { display: block; font-weight: 500; font-size: 11.5px; color: #5A6B73; margin-top: 3px; }
+table.ln-matrix-t tbody th { text-align: left; font-weight: 600; color: #14384A; font-size: 14.5px; }
+table.ln-matrix-t tbody tr:nth-child(even) { background: #FAFCFD; }
+.ln-mx-group { font-size: 10.5px; letter-spacing: 1.6px; text-transform: uppercase; color: #5A6B73; font-weight: 700; padding-bottom: 6px; }
+table.ln-matrix-t thead th.ln-mx-us { background: #0E2A37; color: #fff; font-size: 10.5px; letter-spacing: 1.6px; text-transform: uppercase; font-weight: 700; }
+td.ln-mx-col, th.ln-mx-col { background: #F1FBF9; }
+table.ln-matrix-t thead th.ln-mx-head { background: #0E2A37; color: #fff; }
+table.ln-matrix-t thead th.ln-mx-head small { color: #7FE3D0; }
+.ln-yes { color: #12B79C; font-weight: 700; font-size: 17px; }
+.ln-no { color: #B6C4CA; font-weight: 500; }
+.ln-soon { color: #A8760F; font-weight: 600; font-size: 13px; }
+.ln-mx-strong { font-weight: 800; color: #12876F; font-size: 16px; }
+.ln-mx-note { margin: 16px 0 0; }
 
-  /* ---------------- what it is ---------------- */
-  .ln-about { background: #fff; }
-  .ln-help { background: #fff; }
-  .ln-about-grid {
-    display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px;
-    align-items: start; margin-top: 8px;
-  }
-  .ln-about-body p { margin: 0 0 16px; font-size: 16.5px; color: #4C5F68; line-height: 1.68; }
-  .ln-about-body p:last-child { margin-bottom: 0; }
-  .ln-about-body strong { color: #14384A; font-weight: 700; }
-  .ln-parts {
-    list-style: none; margin: 4px 0 20px; padding: 0;
-    display: flex; flex-direction: column; gap: 11px;
-  }
-  .ln-parts li {
-    position: relative; padding-left: 30px; font-size: 16px; color: #4C5F68; line-height: 1.55;
-  }
-  .ln-parts li::before {
-    content: ''; position: absolute; left: 8px; top: 9px; width: 8px; height: 8px;
-    border-radius: 50%; background: #17D0B0;
-  }
-  .ln-parts li b { color: #14384A; font-weight: 700; }
+/* math block */
+.ln-math { background: #fff; }
+.ln-math-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 22px; margin-top: 44px; align-items: start; }
+.ln-ledger { border: 1px solid rgba(20,56,74,.12); border-radius: 16px; overflow: hidden; }
+.ln-ledger-row { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; align-items: center; padding: 15px 20px; border-bottom: 1px solid rgba(20,56,74,.08); font-size: 14.5px; color: #4C5F68; }
+.ln-ledger-row:last-child { border-bottom: none; }
+.ln-ledger-head { background: #F4F8FA; font-size: 11px; letter-spacing: 1.4px; text-transform: uppercase; font-weight: 700; color: #5A6B73; }
+.ln-ledger-row b { color: #14384A; font-weight: 700; }
+.ln-ledger-tot { background: #F1FBF9; font-weight: 700; color: #14384A; }
+.ln-ledger-tot .ln-save { color: #12876F; font-weight: 800; font-size: 16px; }
+.ln-ledger-row span { text-align: right; }
+.ln-ledger-row span:first-child { text-align: left; }
+.ln-discovery-ledger .ln-ledger-row { display: block; }
+.ln-discovery-ledger .ln-ledger-head { min-height: 46px; }
+.ln-discovery-ledger .ln-ledger-tot { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.ln-scale {
+border-radius: 16px; padding: 30px 28px 30px; color: #fff;
+background: radial-gradient(120% 140% at 88% 4%, #1B4A5F 0%, #14384A 46%, #0E2A37 100%);
+}
+.ln-scale h3 { margin: 0 0 12px; font-size: 20px; font-weight: 800; letter-spacing: -.4px; color: #fff; }
+.ln-scale p { margin: 0 0 16px; font-size: 14.5px; color: #B6C9D1; line-height: 1.62; }
+.ln-scale p:last-child { margin-bottom: 0; }
+.ln-scale .ln-big { display: block; font-size: 40px; font-weight: 800; letter-spacing: -1.5px; color: #17D0B0; line-height: 1.05; margin: 4px 0 6px; }
 
-  /* image slots */
-  .ln-figs { display: flex; flex-direction: column; gap: 16px; }
-  .ln-fig { margin: 0; }
-  .ln-fig-box {
-    position: relative; width: 100%; border-radius: 14px; overflow: hidden;
-    background: #F4F8FA; border: 1px solid rgba(20,56,74,.1);
-  }
-  .ln-fig-box img { display: block; width: 100%; height: auto; }
-  .ln-figs > .ln-fig:first-child .ln-fig-box img { max-height: 440px; object-fit: cover; object-position: center 30%; }
-  .ln-fig-ph {
-    display: none; align-items: center; justify-content: center; text-align: center;
-    min-height: 210px; padding: 28px 22px; border: 1px dashed rgba(20,56,74,.28);
-    border-radius: 14px; background: #F4F8FA; color: #8FA7B0;
-    font-size: 13.5px; line-height: 1.55;
-  }
-  .ln-fig.ln-missing .ln-fig-box { display: none; }
-  .ln-fig.ln-missing .ln-fig-ph { display: flex; }
-  .ln-fig figcaption { margin: 9px 2px 0; font-size: 12.5px; color: #8FA7B0; line-height: 1.5; }
-  .ln-fig-wide .ln-fig-box img { max-height: 420px; object-fit: cover; }
-  .ln-fig-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
+/* quotes */
+.ln-voices { background: #F4F8FA; }
+.ln-quote-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 44px; }
+.ln-quote {
+background: #fff; border: 1px solid rgba(20,56,74,.09); border-radius: 14px;
+padding: 24px 24px 22px; display: flex; flex-direction: column;
+}
+.ln-quote-mark { font-size: 26px; line-height: 1; color: #17D0B0; margin-bottom: 10px; font-weight: 800; }
+.ln-quote p { margin: 0 0 16px; font-size: 15px; font-style: italic; color: #4C5F68; line-height: 1.6; flex: 1 1 auto; }
+.ln-quote cite { font-style: normal; font-size: 13.5px; font-weight: 700; color: #14384A; display: block; padding-top: 13px; border-top: 1px solid rgba(20,56,74,.09); }
+.ln-quote cite small { display: block; font-weight: 500; font-size: 12.5px; color: #5A6B73; margin-top: 2px; }
+.ln-quote.ln-theme p { font-style: normal; }
+.ln-quote-lead { grid-column: span 2; }
+.ln-quote-lead p { font-size: 17px; }
 
-  /* today vs designed-to-do */
-  .ln-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 52px; }
-  .ln-col {
-    border-radius: 16px; padding: 30px 30px 32px; border: 1px solid rgba(20,56,74,.1);
-  }
-  .ln-col-today { background: #F7FAFB; }
-  .ln-col-design { background: #F1FBF9; border-color: rgba(23,208,176,.3); }
-  .ln-col h3 {
-    margin: 0 0 6px; font-size: 19px; font-weight: 800; color: #14384A; letter-spacing: -.3px;
-  }
-  .ln-col .ln-col-note {
-    margin: 0 0 18px; font-size: 13px; color: #8FA7B0; line-height: 1.5;
-  }
-  .ln-col ul { list-style: none; margin: 0; padding: 0; }
-  .ln-col li {
-    position: relative; padding-left: 24px; margin-bottom: 13px;
-    font-size: 15.5px; color: #4C5F68; line-height: 1.58;
-  }
-  .ln-col li:last-child { margin-bottom: 0; }
-  .ln-col li::before {
-    content: ''; position: absolute; left: 6px; top: 8px; width: 7px; height: 7px;
-    border-radius: 2px; background: #B6C4CA;
-  }
-  .ln-col-design li::before { background: #17D0B0; }
+/* traction chips */
+.ln-traction { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 26px; }
+.ln-chip { background: #fff; border: 1px solid rgba(20,56,74,.09); border-top: 3px solid #0AAEE8; border-radius: 12px; padding: 20px 20px 22px; }
+.ln-chip:nth-child(2) { border-top-color: #17D0B0; }
+.ln-chip:nth-child(3) { border-top-color: #E0A12F; }
+.ln-chip:nth-child(4) { border-top-color: #14384A; }
+.ln-chip h3 { margin: 0 0 7px; font-size: 15.5px; font-weight: 800; color: #14384A; letter-spacing: -.2px; }
+.ln-chip p { margin: 0; font-size: 13.5px; color: #5A6B73; line-height: 1.55; }
 
-  .ln-model { margin-top: 52px; }
-  .ln-model-frame {
-    display: block; width: 100%; height: 560px; border: 0;
-  }
-  .ln-model-shell {
-    border-radius: 18px; overflow: hidden; border: 1px solid rgba(20,56,74,.12);
-    box-shadow: 0 30px 70px -40px rgba(14,56,74,.4); background: #0E2A37;
-  }
+/* FAQ */
+.ln-faq { background: #fff; }
+.ln-faq-list { margin-top: 40px; border-top: 1px solid rgba(20,56,74,.12); }
+details.ln-q { border-bottom: 1px solid rgba(20,56,74,.12); }
+details.ln-q summary {
+list-style: none; cursor: pointer; padding: 20px 44px 20px 0; position: relative;
+font-size: 17.5px; font-weight: 700; color: #14384A; letter-spacing: -.2px; line-height: 1.35;
+}
+details.ln-q summary::-webkit-details-marker { display: none; }
+details.ln-q summary::after {
+content: '+'; position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+font-size: 24px; font-weight: 500; color: #17D0B0; line-height: 1;
+}
+details.ln-q[open] summary::after { content: '\2013'; }
+details.ln-q .ln-a { padding: 0 44px 24px 0; }
+details.ln-q .ln-a p { margin: 0 0 12px; font-size: 15.5px; color: #4C5F68; line-height: 1.68; max-width: 820px; }
+details.ln-q .ln-a p:last-child { margin-bottom: 0; }
+details.ln-q .ln-a strong { color: #14384A; }
 
-  /* ---------------- form ---------------- */
-  .ln-form-section { padding: 92px 40px 100px; background: #EDF3F6; }
-  .ln-form-head { max-width: 720px; margin: 0 auto 38px; text-align: center; }
-  .ln-form-head .ln-sub { margin-left: auto; margin-right: auto; }
-  .ln-card-form {
-    max-width: 660px; margin: 0 auto; background: #fff;
-    border: 1px solid rgba(20,56,74,.09); border-radius: 20px;
-    padding: 42px 44px 38px; box-shadow: 0 34px 80px -40px rgba(14,56,74,.35);
-  }
-  .ln-row { display: flex; gap: 16px; }
-  .ln-row > .ln-field { flex: 1 1 0; min-width: 0; }
-  .ln-field { margin-bottom: 18px; }
-  .ln-label { display: block; font-size: 13px; font-weight: 700; color: #14384A; margin-bottom: 7px; }
-  .ln-label span { color: #17D0B0; }
-  .ln-label em { font-style: normal; font-weight: 500; font-size: 12.5px; color: #8FA7B0; }
-  .ln-input {
-    width: 100%; background: #F7FAFB; border: 1px solid rgba(20,56,74,.16); border-radius: 9px;
-    padding: 13px 15px; color: #14384A; font-size: 15px; font-family: inherit; outline: none;
-    transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
-  }
-  .ln-input::placeholder { color: #9FB0B8; }
-  .ln-input:focus {
-    background: #fff; border-color: #17D0B0; box-shadow: 0 0 0 3px rgba(23,208,176,.18);
-  }
-  .ln-input.ln-invalid {
-    border-color: #D96060; box-shadow: 0 0 0 3px rgba(217,96,96,.14);
-  }
+@media (max-width: 1000px) {
+.ln-hero-split { grid-template-columns: 1fr; gap: 36px; }
+.ln-hero-shot { min-height: 0; }
+.ln-hero-shot img { height: 340px; min-height: 0; max-height: 340px; }
+.ln-stat-row { grid-template-columns: 1fr 1fr; }
+.ln-stat:nth-child(2) { border-right: none; }
+.ln-stat:nth-child(1), .ln-stat:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,.07); }
+.ln-quote-grid { grid-template-columns: 1fr 1fr; }
+.ln-quote-lead { grid-column: span 2; }
+.ln-traction { grid-template-columns: 1fr 1fr; }
+.ln-math-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 960px) {
+.ln-nav-links, .ln-cta-btn { display: none !important; }
+.ln-hamburger { display: flex !important; }
+.ln-header { padding: 14px 18px; }
+}
+@media (max-width: 900px) {
+.ln-cost-row { grid-template-columns: 1fr; }
+.ln-why { grid-template-columns: 1fr; }
+}
+@media (max-width: 820px) {
+.ln-band { padding: 0 20px 44px; }
+.ln-band-kicker { padding-top: 36px; font-size: 15.5px; }
+.ln-stat-row { grid-template-columns: 1fr; }
+.ln-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,.07); }
+.ln-quote-grid { grid-template-columns: 1fr; }
+.ln-quote-lead { grid-column: span 1; }
+.ln-traction { grid-template-columns: 1fr; }
+.ln-ledger-row { grid-template-columns: 1fr 1fr; gap: 4px 10px; font-size: 13.5px; }
+}
 
-  .ln-submit {
-    width: 100%; margin-top: 10px; background: #17D0B0; color: #0E2A37; font-weight: 700;
-    font-size: 16px; border: none; border-radius: 10px; padding: 17px; cursor: pointer;
-    font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-    transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
-    box-shadow: 0 8px 22px -10px rgba(23,208,176,.7);
-  }
-  .ln-submit:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -14px rgba(23,208,176,.85); }
-  .ln-submit[disabled] { opacity: .65; cursor: default; transform: none; box-shadow: none; }
-  .ln-spin {
-    width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(14,42,55,.3);
-    border-top-color: #0E2A37; animation: lnSpin .7s linear infinite;
-  }
-  .ln-form-error {
-    display: none; margin: 16px 0 0; padding: 13px 16px; border-radius: 10px;
-    background: rgba(217,96,96,.08); border: 1px solid rgba(217,96,96,.35);
-    color: #A83E3E; font-size: 14px; line-height: 1.55;
-  }
-  .ln-form-note { margin: 16px 0 0; font-size: 12.5px; color: #8FA7B0; line-height: 1.6; text-align: center; }
-  .ln-form-note a { color: #14384A; }
-  .ln-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
-
-  /* success */
-  .ln-success { display: none; text-align: center; padding: 18px 4px 8px; }
-  .ln-success .ln-check-mark {
-    width: 62px; height: 62px; margin: 0 auto 20px; border-radius: 50%;
-    background: rgba(23,208,176,.14); border: 1px solid rgba(23,208,176,.5); color: #12B79C;
-    display: flex; align-items: center; justify-content: center; font-size: 30px;
-  }
-  .ln-success h3 { margin: 0 0 10px; font-size: 26px; font-weight: 800; letter-spacing: -.5px; color: #14384A; }
-  .ln-success p { margin: 0 auto 14px; font-size: 15.5px; color: #5A6B73; line-height: 1.6; max-width: 480px; }
-  .ln-success p:last-child { margin-bottom: 0; }
-
-  /* footer */
-  .ln-footer { background: #0A2029; border-top: 1px solid rgba(255,255,255,.06); padding: 60px 40px 34px; }
-  .ln-footer p { margin: 0 0 22px; font-size: 12px; color: #6E858E; line-height: 1.6; max-width: 820px; }
-  .ln-footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-  .ln-footer-bottom span { font-size: 13px; color: #6E858E; }
-
-  /* ---------------- responsive ---------------- */
-  @media (max-width: 1000px) {
-    .ln-vac-grid { grid-template-columns: 1fr 1fr; }
-  }
-  @media (max-width: 900px) {
-    .ln-cards { grid-template-columns: 1fr; }
-    .ln-vac-grid { grid-template-columns: 1fr; }
-    .ln-handoff-list { grid-template-columns: 1fr; }
-    .ln-about-grid { grid-template-columns: 1fr; gap: 36px; }
-    .ln-compare { grid-template-columns: 1fr; gap: 16px; }
-    .ln-fig-row { grid-template-columns: 1fr; gap: 24px; }
-    .ln-model-frame { height: 420px; }
-  }
-  @media (max-width: 820px) {
-    .ln-col { padding: 24px 22px 26px; }
-    .ln-model-frame { height: 360px; }
-    .ln-nav-links, .ln-cta-btn { display: none !important; }
-    .ln-hamburger { display: flex !important; }
-    .ln-header { padding: 14px 18px; }
-    .ln-hero { padding: 130px 20px 70px; }
-    .ln-hero-actions { gap: 12px; }
-    .ln-hero-jump, .ln-hero-ghost { width: 100%; justify-content: center; }
-    .ln-section { padding: 64px 20px; }
-    .ln-handoff { padding: 30px 24px 32px; border-radius: 16px; }
-    .ln-handoff-cta { width: 100%; justify-content: center; }
-    .ln-form-section { padding: 64px 18px 76px; }
-    .ln-card-form { padding: 30px 22px 28px; border-radius: 16px; }
-    .ln-row { flex-direction: column; gap: 0; }
-  }
 </style>
 </head>
 <body>
-
 <!-- ================= NAV ================= -->
 <header class="ln-header">
   <a href="../" class="ln-logo">
     <span><img src="../assets/lenneuro-logo-transparent.png" alt="Lenneuro"></span>
   </a>
   <nav class="ln-nav-links">
-    <a href="../About.dc.html">About Lenneuro</a>
-    <a href="../Press.dc.html">Media/Press</a>
-    <a href="../Team.dc.html">Meet the Team</a>
-    <a href="../Contact.dc.html">Contact</a>
+    <a href="#value">Why change</a>
+    <a href="#device">How it works</a>
+    <a href="#voices">Clinician feedback</a>
+    <a href="#pathway">Institutional pathway</a>
+    <a href="#faq">Practical questions</a>
   </nav>
-  <a href="#connect" class="ln-cta-btn">Have our team reach out</a>
-  <button aria-label="Menu" class="ln-hamburger" id="ln-burger">
-    <span></span><span></span><span></span>
-  </button>
+  <a href="#connect" class="ln-cta-btn">Explore institutional fit</a>
+  <button aria-label="Menu" aria-controls="ln-mobile-menu" aria-expanded="false" class="ln-hamburger" id="ln-burger"><span></span><span></span><span></span></button>
 </header>
 <div class="ln-mobile-menu" id="ln-mobile-menu">
-  <a href="../About.dc.html">About Lenneuro</a>
-  <a href="../Press.dc.html">Media/Press</a>
-  <a href="../Team.dc.html">Meet the Team</a>
-  <a href="../Contact.dc.html">Contact</a>
-  <a href="#connect">Have our team reach out</a>
+  <a href="#value">Why change</a>
+  <a href="#device">How it works</a>
+  <a href="#voices">Clinician feedback</a>
+  <a href="#pathway">Institutional pathway</a>
+  <a href="#faq">Practical questions</a>
+  <a href="#connect">Explore institutional fit</a>
 </div>
 
 <!-- ================= HERO ================= -->
 <section class="ln-hero">
   <div class="ln-hero-orb" aria-hidden="true"></div>
-  <div class="ln-hero-inner">
-    <div class="ln-eyebrow-solid">For Clinicians</div>
-    <h1>SnapCath™ can make your clinical practice easier.</h1>
-    <p class="ln-lede">One device instead of four. SnapCath™ is designed to anchor the catheter and cover the site in a single ring, with a lid that opens for routine site access so nothing has to be peeled off and rebuilt. Less adhesive on the skin, fewer products to stock, and a design simple enough for patients and caregivers to manage at home.</p>
-    <div class="ln-hero-actions">
-      <a href="#connect" class="ln-hero-jump">Have our clinical education team reach out →</a>
-      <a href="#device" class="ln-hero-ghost">What is SnapCath™</a>
+  <div class="ln-hero-split">
+    <div class="ln-hero-copy">
+      <div class="ln-eyebrow-solid">For vascular access, infusion &amp; health-system teams</div>
+      <h1>A simpler way to secure, cover, and access the catheter site.</h1>
+      <p class="ln-lede">SnapCath™ is being designed as one device that anchors the catheter and covers the site. A hinged, replaceable lid is intended to support routine site access while the adhesive base stays in place—simplifying the multi-product, peel-and-replace workflow used today.</p>
+      <div class="ln-hero-actions">
+        <a href="#connect" class="ln-hero-jump">Explore fit for your institution</a>
+        <a href="#workflow" class="ln-hero-ghost">See the proposed workflow</a>
+      </div>
+      <p class="ln-hero-note">We are conducting customer discovery with clinical teams and health systems now. If this addresses a problem you see, our team can learn your workflow, connect with the right institutional reviewers, and explore whether a future evaluation or letter of intent makes sense.</p>
     </div>
-    <p class="ln-hero-note">This page is unlisted and is shared by invitation. SnapCath™ is still in development, so nothing here is for sale and nothing here asks you to commit to anything. If it looks like it would help the patients you care for, we would like to hear from you.</p>
+    <figure class="ln-hero-shot">
+      <img src="../assets/hero-device.jpg" alt="SnapCath design prototype positioned over a central line insertion site" onerror="this.closest('.ln-hero-shot').classList.add('ln-noimg')">
+      <figcaption>SnapCath design prototype shown in a concept image. Final appearance may differ.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ================= CLAIM BAND ================= -->
+<section class="ln-band" id="value" style="scroll-margin-top:76px;">
+  <div class="ln-band-inner">
+    <p class="ln-band-kicker"><b>What clinical teams are helping us evaluate.</b> The goal is a simpler line-care workflow for clinicians, patients, and the institutions supporting them.</p>
+    <div class="ln-stat-row">
+      <div class="ln-stat">
+        <span class="ln-stat-k">One integrated concept</span>
+        <span class="ln-stat-v">Anchor + cover</span>
+        <span class="ln-stat-d">Designed to combine two core functions now handled by separate products.</span>
+      </div>
+      <div class="ln-stat">
+        <span class="ln-stat-k">Routine site access</span>
+        <span class="ln-stat-v">Open + cleanse</span>
+        <span class="ln-stat-d">A replaceable lid is intended to provide access without removing the adhesive base.</span>
+      </div>
+      <div class="ln-stat">
+        <span class="ln-stat-k">Repeated adhesive removal</span>
+        <span class="ln-stat-v">Designed to reduce it</span>
+        <span class="ln-stat-d">The base is intended to remain in place through scheduled lid changes.</span>
+      </div>
+      <div class="ln-stat">
+        <span class="ln-stat-k">Across care settings</span>
+        <span class="ln-stat-v">Hospital to home</span>
+        <span class="ln-stat-d">The development concept spans inpatient, outpatient infusion, and home workflows.</span>
+      </div>
+    </div>
+    <p class="ln-band-foot">SnapCath is under development. These are design objectives being explored through customer discovery, not demonstrated clinical or economic outcomes.</p>
+  </div>
+</section>
+
+<!-- ================= THE PROBLEM ================= -->
+<section class="ln-section ln-problem">
+  <div class="ln-wrap">
+    <div style="max-width:760px;">
+      <div class="ln-eyebrow-ink">The problem</div>
+      <h2 class="ln-h2">The burden repeats every time the site needs care</h2>
+      <p class="ln-sub">Maintaining a catheter site often means layering separate securement, coverage, antimicrobial, and preparation products. Each scheduled—or unscheduled—change adds sterile steps, nursing time, and another round of adhesive removal. These are recurring themes in our clinician discovery conversations.</p>
+    </div>
+
+    <div class="ln-cost-row">
+      <div class="ln-cost">
+        <span class="ln-cost-v">Multiple</span>
+        <span class="ln-cost-l">Products and preparation steps</span>
+        <span class="ln-cost-s">Coverage, securement, antimicrobial, and preparation products may be layered into one site-care workflow.</span>
+      </div>
+      <div class="ln-cost">
+        <span class="ln-cost-v">Weekly</span>
+        <span class="ln-cost-l">Scheduled site maintenance</span>
+        <span class="ln-cost-s">And sooner when a dressing lifts, becomes soiled, or gets wet.</span>
+      </div>
+      <div class="ln-cost">
+        <span class="ln-cost-v">RN time</span>
+        <span class="ln-cost-l">A recurring clinical resource</span>
+        <span class="ln-cost-s">The staff time attached to scheduled and unscheduled changes varies by care setting and protocol.</span>
+      </div>
+    </div>
+
+    <div class="ln-why">
+      <div class="ln-col ln-col-today">
+        <h3>Where the current workflow creates friction</h3>
+        <p class="ln-col-note">A description of common practice, not a claim about any specific product.</p>
+        <ul>
+          <li>Securement and site coverage are handled by separate products and separate application steps.</li>
+          <li>A dressing that lifts, becomes soiled, or gets wet can trigger an unscheduled change.</li>
+          <li>Inspecting and cleansing the site generally requires removing and replacing adhesive coverage.</li>
+          <li>Maintenance creates another opportunity to disturb the catheter or the surrounding skin.</li>
+          <li>Keeping the site dry during bathing is managed as a separate task.</li>
+        </ul>
+      </div>
+      <div class="ln-col ln-col-today" style="background:#FDF8F0;border-color:rgba(224,161,47,.35);">
+        <h3>How it affects clinicians and patients</h3>
+        <p class="ln-col-note">Themes raised in clinician discovery about workflow and patient experience.</p>
+        <ul>
+          <li>Pain, irritation, and skin trauma associated with repeated adhesive removal.</li>
+          <li>Extra nursing time for a recurring, multi-step task.</li>
+          <li>Clinic visits or home-health coordination built around routine site care.</li>
+          <li>Complexity for patients and caregivers trying to manage life with a long-term line.</li>
+          <li>Continuity challenges as patients move across inpatient, outpatient, and home settings.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="ln-disclaimer" style="margin:24px 0 0;max-width:900px;">Actual products, protocols, and time vary by institution. We use each site’s own workflow during customer discovery.</p>
   </div>
 </section>
 
@@ -421,18 +676,15 @@
 
     <div class="ln-about-grid">
       <div class="ln-about-body">
-        <p>SnapCath™ is an <strong>external accessory for indwelling vascular access catheters</strong>. It is applied to the skin over the insertion site after the line is placed, and it is designed to handle two jobs in one device: holding the catheter in position, and covering the site.</p>
-
+        <p>SnapCath is an <strong>external accessory being developed for indwelling vascular access catheters</strong>. It is designed to be applied over the insertion site after the line is placed and to combine two jobs: holding the catheter in position and covering the site.</p>
         <p>It is a single unit with three parts:</p>
         <ul class="ln-parts">
-          <li><b>An adhesive base</b> that attaches to the skin around the insertion site.</li>
+          <li><b>An adhesive base</b> designed to attach to the skin around the insertion site and remain in place for up to 28 days.</li>
           <li><b>A rigid shell</b> that holds the catheter and sits over the site.</li>
-          <li><b>A hinged lid</b> that opens and closes for site access.</li>
+          <li><b>A hinged, replaceable lid</b> designed to open for routine site access and be changed on the weekly maintenance schedule.</li>
         </ul>
-
-        <p><strong>Who it is being developed for:</strong> patients with a vascular access line that stays in for days or weeks, across inpatient, outpatient infusion, dialysis, long-term care, and home settings. Final indications for use will be established through the regulatory process, so nothing here should be read as a cleared indication.</p>
-
-        <p><strong>Where it is:</strong> in development. There is no product to buy, no study to enroll in, and no timeline being promised. Lenneuro is a five-person company in Colville, Washington, in the 2026 MedTech Innovator cohort.</p>
+        <p><strong>Why that split matters:</strong> in the planned 28-day workflow, one base placement would be followed by three routine lid changes. The design goal is to let the clinician open, cleanse, assess, and replace the lid without peeling the base from the skin each week.</p>
+        <p><strong>Current development focus:</strong> the first configuration is being designed around 3–5 Fr PICC lines for patients whose access remains in place for days or weeks. Customer discovery includes inpatient vascular access, outpatient and home infusion, dialysis, long-term care, and health-system teams.</p>
       </div>
 
       <div class="ln-figs">
@@ -441,135 +693,252 @@
             <img src="../assets/hero-device.jpg" alt="SnapCath design prototype" loading="lazy" onerror="lnFigMissing(this)">
           </div>
           <div class="ln-fig-ph">Device photo<br>assets/hero-device.jpg</div>
-          <figcaption>SnapCath™ design prototype. Final appearance may differ.</figcaption>
+          <figcaption>SnapCath design prototype. Final appearance may differ.</figcaption>
         </figure>
-
-      </div>
-    </div>
-
-    <!-- today vs design intent -->
-    <div class="ln-compare">
-      <div class="ln-col ln-col-today">
-        <h3>How this is generally handled now</h3>
-        <p class="ln-col-note">A description of common practice, not a claim about any specific product.</p>
-        <ul>
-          <li>Securement and site coverage are usually addressed by separate items: a securement or stabilization device, plus a transparent film dressing over the site.</li>
-          <li>Each is applied in its own step, and each has its own adhesive contacting the skin.</li>
-          <li>Dressings are changed on a set schedule, and sooner if they lift, become soiled, or get wet.</li>
-          <li>Inspecting or accessing the site generally means taking the dressing off and putting a new one on.</li>
-          <li>Keeping the site dry during bathing is managed separately, with covers or by avoiding water.</li>
-        </ul>
-      </div>
-      <div class="ln-col ln-col-design">
-        <h3>What SnapCath™ is designed to do</h3>
-        <p class="ln-col-note">Design objectives under evaluation in development. Not tested performance claims.</p>
-        <ul>
-          <li>Combine catheter securement and site coverage in one device, applied in a single step.</li>
-          <li>Limit how much adhesive contacts the skin during wear.</li>
-          <li>Allow the lid to open for routine site access without removing the adhesive base.</li>
-          <li>Provide water resistance for everyday wear.</li>
-          <li>Present the site through a design intended to support visual assessment.</li>
-        </ul>
       </div>
     </div>
 
     <!-- interactive model -->
     <div class="ln-model">
-      <p class="ln-sub" style="margin-bottom:18px;max-width:760px;"><strong style="color:#14384A;">Look at it yourself.</strong> Drag to rotate, scroll to zoom. This is the current design prototype.</p>
+      <p class="ln-sub" style="margin-bottom:18px;max-width:760px;"><strong style="color:#14384A;">Look at it yourself.</strong> Drag to rotate, scroll to zoom, hover a part to label it. This is the current design prototype.</p>
       <div class="ln-model-shell">
         <iframe class="ln-model-frame" src="../uploads/snapcath-3d-model-30cc35f5.html" title="SnapCath interactive 3D model" loading="lazy"></iframe>
       </div>
     </div>
 
-    <p class="ln-disclaimer" style="margin:34px 0 0;max-width:880px;">SnapCath™ is currently under development. It has not been cleared or approved by the U.S. Food and Drug Administration and is not available for sale or commercial distribution. Photographs and models on this page show design prototypes; final product appearance and specifications may differ. Design objectives described here are goals under evaluation, not demonstrated performance, and nothing on this page is an offer to sell or a promotion of an unapproved device.</p>
+    <p class="ln-disclaimer" style="margin:34px 0 0;max-width:880px;">SnapCath is currently under development. It is not yet available for sale or commercial distribution. Photographs and models on this page show design prototypes; final product appearance and specifications may differ. Design objectives described here are goals under evaluation, not demonstrated performance.</p>
   </div>
 </section>
 
-<!-- ================= VALUE CASE (VAC) ================= -->
-<section class="ln-section ln-value" id="value" style="scroll-margin-top:76px;">
+<!-- ================= PROPOSED WORKFLOW ================= -->
+<section class="ln-section ln-matrix" id="workflow" style="scroll-margin-top:76px;">
+  <div class="ln-wrap">
+    <div style="max-width:800px;">
+      <div class="ln-eyebrow-ink">Proposed workflow</div>
+      <h2 class="ln-h2">Designed to simplify routine site care</h2>
+      <p class="ln-sub">The change is not only the number of products. It is the sequence clinicians and patients repeat throughout the life of the line.</p>
+    </div>
+
+    <div class="ln-why">
+      <div class="ln-col ln-col-today">
+        <h3>Common multi-product workflow</h3>
+        <p class="ln-col-note">Protocols vary by institution.</p>
+        <ul>
+          <li>Apply securement, site coverage, and other protocol-required products in separate steps.</li>
+          <li>Remove the adhesive dressing to assess and cleanse the site.</li>
+          <li>Rebuild the bundle after each scheduled or unscheduled change.</li>
+          <li>Repeat training and stocking decisions across each product in the bundle.</li>
+        </ul>
+      </div>
+      <div class="ln-col ln-col-design">
+        <h3>SnapCath design objective</h3>
+        <p class="ln-col-note">A development concept, not tested performance.</p>
+        <ul>
+          <li>Use one device to anchor the catheter and cover the site.</li>
+          <li>Open the hinged lid for routine assessment and cleansing.</li>
+          <li>Replace the lid while leaving the adhesive base in place.</li>
+          <li>Use a consistent core workflow across inpatient, outpatient, and home settings.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="ln-disclaimer" style="margin:24px 0 0;max-width:940px;">SnapCath does not currently include an integrated antimicrobial element. We want to understand how each institution’s existing infection-prevention protocol would interact with the proposed workflow.</p>
+  </div>
+</section>
+
+<!-- ================= SITE-SPECIFIC VALUE CASE ================= -->
+<section class="ln-section ln-math" id="value-case" style="scroll-margin-top:76px;">
+  <div class="ln-wrap">
+    <div style="max-width:820px;">
+      <div class="ln-eyebrow-solid">The institutional case</div>
+      <h2 class="ln-h2">Bring us your workflow. We will build the value case with you.</h2>
+      <p class="ln-sub">Contract pricing, staff time, dwell time, protocols, and unscheduled-change rates differ from one institution to the next. Customer discovery starts with your numbers—not a generic savings promise.</p>
+    </div>
+
+    <div class="ln-math-grid">
+      <div class="ln-ledger ln-discovery-ledger">
+        <div class="ln-ledger-row ln-ledger-head">
+          <span>What we learn together</span>
+        </div>
+        <div class="ln-ledger-row">
+          <span><b>Current bundle</b><br><small style="color:#5A6B73;">Products, contract pricing, and stocking burden</small></span>
+        </div>
+        <div class="ln-ledger-row">
+          <span><b>Clinical workflow</b><br><small style="color:#5A6B73;">Scheduled and unscheduled changes, staff time, and care setting</small></span>
+        </div>
+        <div class="ln-ledger-row">
+          <span><b>Patient population</b><br><small style="color:#5A6B73;">Line type, dwell time, annual volume, and transitions of care</small></span>
+        </div>
+        <div class="ln-ledger-row ln-ledger-tot">
+          <span>A site-specific clinical and operational case</span><span class="ln-save">Built together</span>
+        </div>
+      </div>
+
+      <div class="ln-scale">
+        <h3>A useful starting point—not a promised outcome</h3>
+        <p>Lenneuro uses an internal model to organize current product categories, staff time, scheduled and unscheduled changes, and the proposed base-and-lid workflow.</p>
+        <span class="ln-big">Your data</span>
+        <p style="margin-top:0;">We replace every starting assumption with your contract prices, clinical workflow, and volume before sharing a case with value analysis or product review.</p>
+        <a href="#connect" class="ln-hero-jump">Build the case with us</a>
+      </div>
+    </div>
+
+    <p class="ln-disclaimer" style="margin:24px 0 0;max-width:940px;">Any company-model figures shared during discovery are discussion inputs under evaluation, not demonstrated economic benefit, a quote, or a guarantee of savings. Institutional pricing would be established separately.</p>
+  </div>
+</section>
+
+<!-- ================= CLINICIAN VOICES ================= -->
+<section class="ln-section ln-voices" id="voices" style="scroll-margin-top:76px;">
   <div class="ln-wrap">
     <div style="max-width:760px;">
-      <div class="ln-eyebrow-ink">The value case</div>
-      <h2 class="ln-h2">How SnapCath™ will make your practice better</h2>
-      <p class="ln-sub">Two things tend to be true at once. What makes a device easier to live with on your unit is usually the same thing that makes the case for it at your institution. Here is where SnapCath™ lands on both, written so you can lift it straight into a conversation.</p>
+      <div class="ln-eyebrow-ink">Clinician feedback</div>
+      <h2 class="ln-h2">Why clinical teams are joining the conversation</h2>
+      <p class="ln-sub">Feedback shared during early customer discovery by vascular access and infusion professionals who have seen the concept. These statements are individual impressions, not clinical evidence or performance data.</p>
     </div>
 
-    <div class="ln-vac-grid">
-      <div class="ln-vac-item">
-        <span class="ln-vac-tag">Your time</span>
-        <h3>A site check stops being a procedure</h3>
-        <p>A routine dressing change today is a multi-step sterile procedure, and in home and outpatient settings it can require a visit built around it. SnapCath™ is designed so the lid opens for routine site access without removing the adhesive base. Time per change is the line most institutions have the least visibility into and the most to gain from.</p>
+    <div class="ln-quote-grid">
+      <blockquote class="ln-quote ln-quote-lead">
+        <div class="ln-quote-mark">&ldquo;</div>
+        <p>As someone who manages vascular access securement challenges across inpatient, outpatient, and mobile settings, I see a lot of potential here. I’m interested in using the SnapCath for my patients when it becomes available.</p>
+        <cite>RN, Vascular Access Specialist</cite>
+      </blockquote>
+      <blockquote class="ln-quote">
+        <div class="ln-quote-mark">&ldquo;</div>
+        <p>As a home infusion nurse, I love your new dressing device.</p>
+        <cite>RN, MSN · Senior Director<small>Independent home infusion provider</small></cite>
+      </blockquote>
+      <div class="ln-quote ln-theme">
+        <div class="ln-quote-mark" aria-hidden="true">↗</div>
+        <p><strong>Discovery theme:</strong> clinicians consistently respond to the simplicity of a one-device concept and routine site access without removing the base.</p>
+        <cite>Across early conversations</cite>
       </div>
-
-      <div class="ln-vac-item">
-        <span class="ln-vac-tag">Patient outcomes</span>
-        <h3>Three problems, one device</h3>
-        <p>The things that hurt patients and budgets alike are downstream: central line associated bloodstream infection, unplanned line replacement after a dislodgement, and medical adhesive related skin injury. Each is a well documented category of avoidable harm and avoidable cost, and each is already tracked by most quality departments. SnapCath™ is being designed against all three at once rather than one at a time.</p>
-      </div>
-
-      <div class="ln-vac-item">
-        <span class="ln-vac-tag">Continuity of care</span>
-        <h3>The same device follows the patient</h3>
-        <p>Inpatient, outpatient infusion, dialysis, long term care, and home are the same product and the same technique, which matters for in-servicing, for par levels, and for systems carrying post-acute risk. SnapCath™ is being designed to be simple enough for a patient or caregiver to manage at home, which is where the burden of the current bundle falls hardest.</p>
-      </div>
-
-      <div class="ln-vac-item">
-        <span class="ln-vac-tag">Supply spend</span>
-        <h3>One line item instead of a bundle</h3>
-        <p>Securing and covering a catheter site today means stocking several separate items and applying them in sequence: a securement device, a transparent film dressing, an antimicrobial disc, plus the prep and tape around them. SnapCath™ is designed to do the anchoring and the covering in one device, which consolidates what materials management stocks, and what a review committee evaluates, into a single item.</p>
-      </div>
-
-      <div class="ln-vac-item">
-        <span class="ln-vac-tag">Reimbursement</span>
-        <h3>No new codes to secure</h3>
-        <p>SnapCath™ is designed to fit inside existing line insertion and maintenance coding, and into home health and outpatient infusion bundles. There is no new code to obtain, no payer negotiation to open, and no separate reimbursement pathway for finance to build before the product can be used.</p>
-      </div>
-
-      <div class="ln-vac-item">
-        <span class="ln-vac-tag">Regulatory status</span>
-        <h3>Class I, 510(k) exempt</h3>
-        <p>SnapCath™ is classified as a Class I, 510(k) exempt device, so no FDA submission is required at launch. Lenneuro has completed its exemption documentation and established an eQMS. For a review committee, that removes one of the more common sources of timeline uncertainty when evaluating a device from an early stage company.</p>
-      </div>
+      <blockquote class="ln-quote">
+        <div class="ln-quote-mark">&ldquo;</div>
+        <p>We currently service about 100 acute care hospitals and have assisted with multiple product trials. Would like to be involved!</p>
+        <cite>RN, VA-BC · Director of R&amp;D<small>Mobile vascular access provider</small></cite>
+      </blockquote>
+      <blockquote class="ln-quote">
+        <div class="ln-quote-mark">&ldquo;</div>
+        <p>What an incredible improvement your product offers for securing lines. I’ve seen skin- and tape-related wounds and infections both professionally and personally, so this really resonates with me. I’m excited to follow your progress, and I hope facilities adopt it widely for the sake of their patients!</p>
+        <cite>VA-RN · Former regional sales manager</cite>
+      </blockquote>
     </div>
 
-    <p class="ln-disclaimer" style="margin:26px 0 0;max-width:880px;">Everything above describes design objectives under evaluation during development. SnapCath™ has not been cleared or approved by the U.S. Food and Drug Administration, and none of this should be read as demonstrated performance, a cleared indication, or a claim of clinical or economic benefit.</p>
-
-    <!-- handoff -->
-    <div class="ln-handoff">
-      <h3>If this would help on your unit, tell us.</h3>
-      <p>Tell us where you work and someone from our clinical education team will reach out to learn what your unit actually needs. If your site later wants to look at SnapCath™ formally, we will work with whoever handles that on your end. That part is ours, not yours.</p>
-      <ul class="ln-handoff-list">
-        <li>A written summary of the device and its regulatory status, formatted for value analysis review</li>
-        <li>Straight answers, in writing, to the questions your committee raises</li>
-        <li>A walkthrough of the design with your vascular access or infection prevention leads</li>
-        <li>Hands-on time with the device once prototypes are available for evaluation</li>
-      </ul>
-      <a href="#connect" class="ln-handoff-cta">Have our clinical education team reach out →</a>
+    <div style="max-width:760px;margin-top:56px;">
+      <div class="ln-eyebrow-ink">Early momentum</div>
+      <h2 class="ln-h2" style="font-size:clamp(24px,2.6vw,32px);">Customer discovery and development progress</h2>
+    </div>
+    <div class="ln-traction">
+      <div class="ln-chip">
+        <h3>Active customer discovery</h3>
+        <p>Conversations across vascular access, home infusion, and dialysis networks, with letters of intent in progress.</p>
+      </div>
+      <div class="ln-chip">
+        <h3>Pilot in planning</h3>
+        <p>Planning with a 950-bed North Carolina health system and a mobile vascular access provider serving about 100 hospitals.</p>
+      </div>
+      <div class="ln-chip">
+        <h3>Clinical leader network</h3>
+        <p>Building relationships with clinical leaders across vascular access networks.</p>
+      </div>
+      <div class="ln-chip">
+        <h3>MedTech Innovator 2026</h3>
+        <p>Selected into the current MedTech Innovator cohort.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ================= HOW WE CAN HELP EACH OTHER ================= -->
-<section class="ln-section ln-help">
+<section class="ln-section ln-help" id="pathway" style="scroll-margin-top:76px;">
   <div class="ln-wrap">
     <div style="max-width:720px;">
-      <div class="ln-eyebrow-ink">Working together</div>
-      <h2 class="ln-h2">How we can help each other</h2>
-      <p class="ln-sub">Clinicians are the people who see where line care breaks down. We are the people who can do something about it, but only if we hear about it. That trade is the whole relationship.</p>
+      <div class="ln-eyebrow-solid">Institutional pathway</div>
+      <h2 class="ln-h2">From clinical interest to an institutional next step</h2>
+      <p class="ln-sub">Clinicians should not have to own the purchasing process. You can help us understand the problem and, when possible, point us toward the people who evaluate new products. We handle the work from there.</p>
     </div>
     <div class="ln-cards">
       <div class="ln-card">
-        <h3>You shape the device</h3>
-        <p>SnapCath™ is still in development, which means what you tell us about your patients and your workflow still changes design decisions. Clinicians who talk with us now are also the first we contact when the device reaches clinical evaluation.</p>
+        <h3>1. Share the workflow</h3>
+        <p>Tell us where line care creates friction for your team or patients. Because SnapCath is still in development, that feedback can still shape the device and the proposed evaluation.</p>
       </div>
       <div class="ln-card">
-        <h3>We handle the paperwork</h3>
-        <p>Value analysis packets, product review forms, infection prevention questions, and whatever else your institution asks for. You do not need to know that process or chase it. Tell us who owns it, or tell us you are not sure, and we will find out.</p>
+        <h3>2. Identify the right owner</h3>
+        <p>If you know who leads value analysis, product review, infection prevention, nursing operations, or supply chain, introduce us. If you do not, that is completely normal—we will help find the right path.</p>
       </div>
       <div class="ln-card">
-        <h3>No commitment of any kind</h3>
-        <p>This is not an order, a quote, a letter of intent, or a contract. There is no cost, no purchase obligation, no requirement to participate in any future study, and no exclusivity. A conversation is a conversation.</p>
+        <h3>3. Build the next step together</h3>
+        <p>We prepare the clinical summary, site-specific value case, and review materials. If there is mutual fit, we can then work with an authorized institutional contact toward a future evaluation, pilot discussion, or letter of intent.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRACTICAL QUESTIONS ================= -->
+<section class="ln-section ln-faq" id="faq" style="scroll-margin-top:76px;">
+  <div class="ln-wrap">
+    <div style="max-width:800px;">
+      <div class="ln-eyebrow-ink">Practical questions</div>
+      <h2 class="ln-h2">What clinicians and institutions ask us</h2>
+      <p class="ln-sub">You do not need to carry these answers into a committee meeting. This is simply the context most teams want before starting a discovery conversation.</p>
+    </div>
+
+    <div class="ln-faq-list">
+      <details class="ln-q" open>
+        <summary>What are you asking me to do?</summary>
+        <div class="ln-a">
+          <p>Start with a conversation. Tell us what is difficult about line maintenance in your setting and whether the proposed workflow addresses a real need. If it does, help us identify the person or group that reviews new clinical products at your institution.</p>
+          <p>Submitting the form below is not an order, a letter of intent, or any other commitment.</p>
+        </div>
+      </details>
+
+      <details class="ln-q">
+        <summary>Who from my institution should be involved?</summary>
+        <div class="ln-a">
+          <p>The answer depends on your setting. It may include vascular access, infusion or dialysis leadership, nursing operations, infection prevention, value analysis, product review, supply chain, or a home-infusion clinical leader. A name or introduction is helpful, but not required.</p>
+        </div>
+      </details>
+
+      <details class="ln-q">
+        <summary>Which lines and care settings are the current focus?</summary>
+        <div class="ln-a">
+          <p>The first configuration is being designed around <strong>3–5 Fr PICC lines</strong> for patients whose access remains in place for days or weeks. Customer discovery includes inpatient vascular access, outpatient and home infusion, dialysis, long-term care, and health-system teams. Broader line applications are not part of the current first-configuration focus.</p>
+        </div>
+      </details>
+
+      <details class="ln-q">
+        <summary>How does the current design address site access and CHG?</summary>
+        <div class="ln-a">
+          <p>The hinged lid is designed to open for routine site assessment and cleansing while the adhesive base remains in place. The current SnapCath concept does not include an integrated CHG element and should not be presented as an infection-prevention outcome. Understanding how the design could fit each institution’s existing protocol is part of customer discovery.</p>
+        </div>
+      </details>
+
+      <details class="ln-q">
+        <summary>What information helps build an institutional value case?</summary>
+        <div class="ln-a">
+          <p>The most useful inputs are your current product bundle, contract pricing, scheduled and unscheduled change frequency, staff time, patient volume, line dwell time, and care setting. We use those inputs to build a site-specific discussion for clinical and product-review stakeholders.</p>
+        </div>
+      </details>
+
+      <details class="ln-q">
+        <summary>Could a discovery conversation lead to a pilot or letter of intent?</summary>
+        <div class="ln-a">
+          <p>Yes, if the clinical need, proposed workflow, and institutional priorities align. Any pilot planning or letter of intent would be a later, separate step with an authorized institutional representative. The initial clinician inquiry is simply the start of that process.</p>
+        </div>
+      </details>
+
+      <details class="ln-q">
+        <summary>When could an institution evaluate SnapCath?</summary>
+        <div class="ln-a">
+          <p>SnapCath is still in development. There is no product available for purchase and no evaluation timeline being promised on this page. Institutions participating in discovery can stay close to the program as future evaluation plans take shape.</p>
+        </div>
+      </details>
+
+      <details class="ln-q">
+        <summary>What evidence is available today?</summary>
+        <div class="ln-a">
+          <p>This page shows the current design prototype, Lenneuro’s internal workflow and economic modeling, early clinician feedback, and the status of active customer discovery. It does not present demonstrated clinical outcomes or guaranteed economic results. Those distinctions will remain explicit in every institutional conversation.</p>
+        </div>
+      </details>
     </div>
   </div>
 </section>
@@ -577,22 +946,17 @@
 <!-- ================= CONNECT FORM ================= -->
 <section class="ln-form-section" id="connect" style="scroll-margin-top:84px;">
   <div class="ln-form-head">
-    <div class="ln-eyebrow-ink">Next step</div>
-    <h2 class="ln-h2">Would you like someone to reach out?</h2>
-    <p class="ln-sub">Someone from our clinical education team will contact you to learn about your hospital's needs and, if it makes sense, work with your institution from there. Four required fields, about thirty seconds, and no obligation.</p>
+    <div class="ln-eyebrow-ink">Start customer discovery</div>
+    <h2 class="ln-h2">Explore whether SnapCath fits your institution</h2>
+    <p class="ln-sub">Tell us where you practice and our team will learn about your line-care workflow, help identify the right institutional stakeholders, and discuss a sensible next step. Four required fields, about thirty seconds.</p>
   </div>
-
   <div class="ln-card-form">
-
     <div id="ln-loi-form-wrap">
       <form id="ln-loi-form" novalidate autocomplete="on">
-
-        <!-- honeypot -->
         <div class="ln-hp" aria-hidden="true">
           <label for="ln_hp">Leave this field blank</label>
           <input type="text" id="ln_hp" name="ln_hp" tabindex="-1" autocomplete="off">
         </div>
-
         <div class="ln-row">
           <div class="ln-field">
             <label class="ln-label" for="ln-firstname">First name <span>*</span></label>
@@ -603,71 +967,73 @@
             <input class="ln-input" type="text" id="ln-lastname" name="lastname" autocomplete="family-name" required>
           </div>
         </div>
-
         <div class="ln-field">
           <label class="ln-label" for="ln-email">Work email <span>*</span></label>
-          <input class="ln-input" type="email" id="ln-email" name="email" placeholder="you@hospital.org" autocomplete="email" required>
+          <input class="ln-input" type="email" id="ln-email" name="email" placeholder="you@organization.org" autocomplete="email" required>
         </div>
-
         <div class="ln-field">
           <label class="ln-label" for="ln-company">Hospital or institution <span>*</span></label>
-          <input class="ln-input" type="text" id="ln-company" name="company" placeholder="Where you practice" autocomplete="organization" required>
+          <input class="ln-input" type="text" id="ln-company" name="company" placeholder="Where you practice or work" autocomplete="organization" required>
         </div>
-
         <div class="ln-field">
           <label class="ln-label" for="ln-jobtitle">Role or title <em>Optional</em></label>
           <input class="ln-input" type="text" id="ln-jobtitle" name="jobtitle" placeholder="e.g. Vascular Access Nurse" autocomplete="organization-title">
         </div>
-
-        <button type="submit" class="ln-submit" id="ln-loi-submit">Ask our team to reach out</button>
+        <button type="submit" class="ln-submit" id="ln-loi-submit">Start the conversation</button>
         <p class="ln-form-error" id="ln-loi-error" role="alert"></p>
-        <p class="ln-form-note">Your information goes to Lenneuro only. We do not sell or share contact data, and this is not an order, a quote request, or a commitment of any kind. Questions first? Email <a href="mailto:info@lenneuro.com">info@lenneuro.com</a>.</p>
+        <p class="ln-form-note">Your information goes to Lenneuro only. We do not sell or share contact data. Submitting this form is not an order, a letter of intent, or a commitment. Any future evaluation, pilot, or institutional letter of intent would be discussed separately. Questions first? Email <a href="mailto:info@lenneuro.com">info@lenneuro.com</a>.</p>
       </form>
     </div>
-
-    <!-- success state -->
     <div class="ln-success" id="ln-loi-success" role="status">
-      <div class="ln-check-mark">✓</div>
+      <div class="ln-check-mark">&#10003;</div>
       <h3 id="ln-loi-success-name">Thank you.</h3>
-      <p>Someone from our clinical education team will be in touch shortly to learn what your site needs.</p>
-      <p>If your institution has a specific process for reviewing new products, mention it when we connect and we will follow it. If you are not sure what that process is, that is completely normal and we will work it out together.</p>
-      <p style="font-size:13px;color:#8FA7B0;">Know a colleague who should see this? You are welcome to forward them this page.</p>
+      <p>Someone from our team will be in touch shortly to learn what your site needs.</p>
+      <p>If your institution has a specific process for reviewing new products, mention it when we connect and we will follow it. If you are not sure what that process is, that is completely normal—we will work it out together.</p>
+      <p style="font-size:13px;color:#5A6B73;">Know a colleague who should see this? You are welcome to forward them this page.</p>
     </div>
-
   </div>
 </section>
 
 <!-- ================= FOOTER ================= -->
 <footer class="ln-footer">
   <div style="max-width:1180px;margin:0 auto;">
-    <p>SnapCath™ is an external catheter securement accessory under development by Lenneuro, Inc. It has not been cleared or approved by the U.S. Food and Drug Administration and is not available for sale or commercial distribution. Information collected on this page is used only to contact you about SnapCath™. Requesting a conversation is not an order, a contract, or a commitment to purchase.</p>
+    <p>SnapCath™ is an external catheter securement accessory under development by Lenneuro, Inc. It is not available for sale or commercial distribution. Product descriptions on this page are design objectives under evaluation. Workflow and cost figures are illustrative company-model inputs, not demonstrated performance or a guarantee of clinical or economic benefit. Clinician feedback reflects individual impressions and is not clinical evidence. Information collected on this page is used only to contact you about SnapCath. Requesting a conversation is not an order, a letter of intent, a contract, or a commitment to purchase.</p>
     <div class="ln-footer-bottom">
-      <span>© 2026 Lenneuro, Inc. · All Rights Reserved.</span>
+      <span>&copy; 2026 Lenneuro, Inc. &middot; All Rights Reserved.</span>
     </div>
   </div>
 </footer>
 
 <script>
-  // Image slots: if a photo has not been added yet, show a labelled
-  // placeholder instead of a broken image icon.
-  function lnFigMissing(img) {
-    var fig = img.closest('.ln-fig');
-    if (fig) fig.classList.add('ln-missing');
+function lnFigMissing(img) {
+  var fig = img.closest('.ln-fig');
+  if (fig) fig.classList.add('ln-missing');
+}
+(function () {
+  var burger = document.getElementById('ln-burger');
+  var menu = document.getElementById('ln-mobile-menu');
+  if (burger && menu) {
+    burger.addEventListener('click', function () {
+      var isOpen = menu.classList.toggle('ln-open');
+      burger.setAttribute('aria-expanded', String(isOpen));
+    });
+    menu.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') {
+        menu.classList.remove('ln-open');
+        burger.setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && menu.classList.contains('ln-open')) {
+        menu.classList.remove('ln-open');
+        burger.setAttribute('aria-expanded', 'false');
+        burger.focus();
+      }
+    });
   }
-
-  (function () {
-    var burger = document.getElementById('ln-burger');
-    var menu = document.getElementById('ln-mobile-menu');
-    if (burger && menu) {
-      burger.addEventListener('click', function () {
-        menu.classList.toggle('ln-open');
-      });
-      menu.addEventListener('click', function (e) {
-        if (e.target.tagName === 'A') menu.classList.remove('ln-open');
-      });
-    }
-  })();
+})();
 </script>
 <script src="../assets/ln-loi.js?v=5" defer></script>
+
 </body>
 </html>
